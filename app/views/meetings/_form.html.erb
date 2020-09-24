@@ -22,6 +22,15 @@
   </div>
 
   <div class="field">
+    <%= form.label :tag_list, "תגיות" %>
+    <%=
+      form.text_field :tag_list,
+      value: @meeting.send(:tag_list).to_s,
+      placeholder: 'הגשמה, חיי גרעין'
+    %>
+  </div>
+
+  <div class="field">
     <%= form.label :users %>
     <%= form.collection_select :user_ids, @team.users, :id, :name, {prompt: 'בחירת חברי צוות נוכחים'}, {multiple: true} %>
   </div>
