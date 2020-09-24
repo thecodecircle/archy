@@ -25,6 +25,7 @@ class DocumentsController < ApplicationController
   # POST /documents.json
   def create
     @document = Document.new(document_params)
+    @document.user = current_user
 
     respond_to do |format|
       if @document.save
@@ -69,6 +70,6 @@ class DocumentsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def document_params
-      params.require(:document).permit(:user_id, :content, :description)
+      params.require(:document).permit(:user_id, :content, :description, attachments: [])
     end
 end

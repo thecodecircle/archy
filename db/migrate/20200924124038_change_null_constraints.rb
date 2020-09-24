@@ -1,0 +1,5 @@
+class ChangeNullConstraints < ActiveRecord::Migration[6.0]
+  def change
+    change_column_null :users, :meeting_id, true
+  end
+end

@@ -18,12 +18,16 @@
 
   <div class="field">
     <%= form.label :content %>
-    <%= form.text_area :content %>
+    <%= form.rich_text_area :content %>
   </div>
 
   <div class="field">
     <%= form.label :privacy %>
     <%= form.number_field :privacy %>
+  </div>
+
+  <div class="field">
+    <%= form.file_field :attachment %>
   </div>
 
   <div class="actions">
