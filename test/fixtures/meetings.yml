@@ -1,0 +1,11 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  team: one
+  content: MyText
+  privacy: 1
+
+two:
+  team: two
+  content: MyText
+  privacy: 1
