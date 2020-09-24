@@ -5,5 +5,5 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :validatable
   has_many :documents
   has_and_belongs_to_many :teams, join_table: "teams_users"
-  belongs_to :meeting, optional: true
+  has_and_belongs_to_many :meetins, join_table: "meetings_users"
 end

@@ -14,21 +14,24 @@ class MeetingsController < ApplicationController
 
   # GET /meetings/new
   def new
-    @meeting = Meeting.new
+    @team = Team.find(params[:team_id])
+    @meeting = @team.meetings.new
   end
 
   # GET /meetings/1/edit
   def edit
+    @team = Team.find(params[:team_id])
   end
 
   # POST /meetings
   # POST /meetings.json
   def create
-    @meeting = Meeting.new(meeting_params)
+    @team = Team.find(params[:team_id])
+    @meeting = @team.meetings.new(meeting_params)
 
     respond_to do |format|
       if @meeting.save
-        format.html { redirect_to @meeting, notice: 'Meeting was successfully created.' }
+        format.html { redirect_to team_meeting_path(@team, @meeting), notice: 'Meeting was successfully created.' }
         format.json { render :show, status: :created, location: @meeting }
       else
         format.html { render :new }
@@ -40,9 +43,10 @@ class MeetingsController < ApplicationController
   # PATCH/PUT /meetings/1
   # PATCH/PUT /meetings/1.json
   def update
+    @team = Team.find(params[:team_id])
     respond_to do |format|
       if @meeting.update(meeting_params)
-        format.html { redirect_to @meeting, notice: 'Meeting was successfully updated.' }
+        format.html { redirect_to team_meeting_path(@team, @meeting), notice: 'Meeting was successfully updated.' }
         format.json { render :show, status: :ok, location: @meeting }
       else
         format.html { render :edit }
@@ -69,6 +73,7 @@ class MeetingsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def meeting_params
-      params.require(:meeting).permit(:team_id, :content, :privacy, attachments: [])
+      params.require(:meeting).permit(:team_id, :content, :privacy, :subject, attachments: [], user_ids: [])
     end
+
 end

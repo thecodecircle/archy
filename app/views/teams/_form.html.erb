@@ -19,7 +19,6 @@
   <div class="field">
     <%= form.label :users %>
     <%= form.collection_select :user_ids, User.all, :id, :name, {prompt: 'בחירת חברי הצוות'}, {multiple: true} %>
-
   </div>
 
   <div class="actions">

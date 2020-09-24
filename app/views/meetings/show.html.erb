@@ -1,8 +1,13 @@
 <p id="notice"><%= notice %></p>
 
 <p>
+  <strong>Subject:</strong>
+  <%= @meeting.subject %>
+</p>
+
+<p>
   <strong>Team:</strong>
-  <%= @meeting.team_id %>
+  <%= Team.find(@meeting.team_id).name %>
 </p>
 
 <p>
@@ -15,5 +20,19 @@
   <%= @meeting.privacy %>
 </p>
 
-<%= link_to 'Edit', edit_meeting_path(@meeting) %> |
-<%= link_to 'Back', meetings_path %>
+<p>
+  <strong>Attachment count:</strong>
+  <%= @meeting.attachments.count %>
+</p>
+
+<p>
+  <strong>Users present:</strong>
+  <ul>
+    <% @meeting.users.each do |user| %>
+      <li><%= user.name %></li>
+    <% end %>
+  </ul>
+</p>
+
+<%= link_to 'Edit', edit_team_meeting_path(@meeting) %> |
+<%# link_to 'Back', meetings_path %>
