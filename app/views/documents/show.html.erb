@@ -2,7 +2,12 @@
 
 <p>
   <strong>User:</strong>
-  <%= @document.user_id %>
+  <%= User.find(@document.user_id).name %>
+</p>
+
+<p>
+  <strong>Title:</strong>
+  <%= @document.title %>
 </p>
 
 <p>
@@ -13,6 +18,11 @@
 <p>
   <strong>Description:</strong>
   <%= @document.description %>
+</p>
+
+<p>
+  <strong>Privacy:</strong>
+  <%= @document.privacy %>
 </p>
 
 <%= @document.attachments.first %>
