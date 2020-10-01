@@ -1,41 +1,21 @@
-<div class="flex justify-center w-full md:w-4/5 mx-auto text-center">
-  <p class="text-xl">מכאן אפשר לחפש מסמכים היסטורים, להעלות מסמכים בעצמכן, או להיכנס למרחב העבודה הצוותי</p>
-</div>
-<%# term = "פרדס" %>
-<%# PgSearch.multisearch(term) %>
-
-
-
-<!--Container-->
-<div class="container w-full md:w-4/5  mx-auto px-2 mt-20 text-gray-900">
-<!--Card-->
-  <div id='recipients' class="p-8 mt-6 lg:mt-0 rounded shadow bg-white">
-  	<table id="table" class="stripe hover">
-  		<thead>
-  			<tr>
-  				<th data-priority="1">כותרת</th>
-  				<th data-priority="2">תיאור/צוות</th>
-  				<th data-priority="3">תוכן</th>
-  			</tr>
-  		</thead>
-  		<tbody>
-        <% Document.all.each do |document| %>
-          <tr>
-              <td><%= document.title %></td>
-              <td><%= document.description %></td>
-              <td><%= document.content %></td>
-          </tr>
-        <% end %>
-        <% Meeting.all.each do |meeting| %>
-          <tr>
-              <td><%= meeting.subject %></td>
-              <td><%= meeting.team.name %> </td>
-              <td><%= meeting.content %></td>
-          </tr>
-        <% end %>
-  		</tbody>
-  	</table>
+<div class="flex flex-col items-center">
+  <%= image_tag "brainstorming" %>
+  <%= link_to "חיפוש חומרים", search_path, class: "bg-white hover:bg-white text-gray-800 font-bold py-2 px-4 rounded-full mt-4 hover:underline font-bold shadow opacity-75" %>
+  <div class="flex justify-between my-4">
+    <%= link_to "יצירה ועריכה של מסמכים", documents_path, class: "bg-white hover:bg-white text-gray-800 font-bold py-2 px-4 rounded-full hover:underline font-bold shadow opacity-75 ml-8" %>
+    <%= link_to "מרחב עבודה לצוותים", teams_path, class: "bg-white hover:bg-white text-gray-800 font-bold py-2 px-4 rounded-full hover:underline font-bold shadow opacity-75" %>
   </div>
-  <!--/Card-->
+  <p class="font-bold">ארכישמוץ (שם זמני) הוא פרויקט לתיעוד תנועת השומר הצעיר. </p>
+  <p class="w-full md:w-4/5">
+    <span class="font-bold">"לא לחינם נאמר על השומר הצעיר שזו תנועה ש'כתבה את עצמה לדעת' ו'חקרה את עצמה לדעת'.
+       התנועה הקטנה יחסית יצרה שפע של מקורות כתובים — פרוטוקולים, עלונים, ביטאונים, חוברות וספרי הדרכה ועוד.
+        חברי התנועה ובוגריה גילו תודעה היסטורית מפותחת והרבו לכתוב ספרי זיכרונות, קובצי מקורות, ביוגרפיות וכתבים שונים" </span>(יזהר בן-נחום).
+מאז הקמתה, תנועת השומר הצעיר יצרה שפע מקורות, מתוך התודעה ההיסטורית עליה כותב בן-נחום.
+ מאז הקמת תנועת הבוגרים, המשכנו ביצירת השפע הזה, המשכנו לכתוב, ליצור ולתעד את החיים והעשייה שלנו, מתוך תחושה שאנחנו חלק מרצף ארוך של היסטוריה שומרית ארוכה.
+
+לרגל עשרים שנה להקמת תנועת הבוגרים, הגיע הזמן לעשות סדר בכל הבלגן כדי שנוכל לחלוק את מה שכתבנו ויצרנו כתנועה בעשרים השנים האחרונות,
+ כדי שנוכל להבין את עצמנו ואת התנועה טוב יותר, וכדי שנוכל להתמודד עם משבר ההגשמה טוב יותר ואולי אפילו להדריך אותו אחרת.
+מתוך המאגר שיווצר נוכל לקבל תשובות על שאלות שאנחנו שואלים את עצמנו כתנועה, וחשוב מזה, להבין על שאלות חדשות שלא חשבנו עליהן.
+זה לא שורשי יניקה. זה תיעוד של התנועה שלנו - מהפגישות היומיומיות ועד ללבטים הכי קשים על הבחירה לחיות חיי שיתוף חלוציים בשנת 2020.
+  </p>
 </div>
-<!--/container-->

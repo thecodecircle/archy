@@ -1,0 +1,38 @@
+<div class="flex justify-center w-full md:w-4/5 mx-auto text-center">
+  <p class="text-xl">מכאן אפשר לחפש מסמכים היסטורים, להעלות מסמכים בעצמכן, או להיכנס למרחב העבודה הצוותי</p>
+</div>
+
+
+<!--Container-->
+<div class="container w-full md:w-4/5  mx-auto px-2 mt-20 text-gray-900">
+<!--Card-->
+  <div id='recipients' class="p-8 mt-6 lg:mt-0 rounded shadow bg-white">
+  	<table id="table" class="stripe hover">
+  		<thead>
+  			<tr>
+  				<th data-priority="1">כותרת</th>
+  				<th data-priority="2">תיאור/צוות</th>
+  				<th data-priority="3">תוכן</th>
+  			</tr>
+  		</thead>
+  		<tbody>
+        <% Document.all.each do |document| %>
+          <tr>
+              <td><%= document.title %></td>
+              <td><%= document.description %></td>
+              <td><%= document.content %></td>
+          </tr>
+        <% end %>
+        <% Meeting.all.each do |meeting| %>
+          <tr>
+              <td><%= meeting.subject %></td>
+              <td><%= meeting.team.name %> </td>
+              <td><%= meeting.content %></td>
+          </tr>
+        <% end %>
+  		</tbody>
+  	</table>
+  </div>
+  <!--/Card-->
+</div>
+<!--/container-->
