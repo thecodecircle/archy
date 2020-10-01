@@ -11,19 +11,19 @@
     </div>
   <% end %>
 
-  <div class="field">
-    <%= form.label :title %>
-    <%= form.text_area :title %>
+  <div class="field flex-auto w-full">
+    <%= form.label :title, "כותרת:" %>
+    <%= form.text_field :title %>
   </div>
 
   <div class="field">
-    <%= form.label :content %>
-    <%= form.rich_text_area :content %>
-  </div>
-
-  <div class="field">
-    <%= form.label :description %>
+    <%= form.label :description, "תיאור" %>
     <%= form.rich_text_area :description %>
+  </div>
+
+  <div class="field">
+    <%= form.label :content, "תוכן" %>
+    <%= form.rich_text_area :content %>
   </div>
 
   <div class="field">
@@ -31,7 +31,7 @@
   </div>
 
   <div class="field">
-    <%= form.label :tag_list, "תגיות" %>
+    <%= form.label :tag_list, "תגיות:" %>
     <%=
       form.text_field :tag_list,
       value: @document.send(:tag_list).to_s,
@@ -40,11 +40,12 @@
   </div>
 
   <div class="field">
+    <%= form.label :privacy, "הגדרת פרטיות:" %>
     <% privacy_options = [["פרטי", "personal"], ["ציבורי", "commons"]] %>
     <%= form.select :privacy, privacy_options, { include_blank: true } %>
   </div>
 
   <div class="actions">
-    <%= form.submit %>
+    <%= form.submit "שליחה", class: "p-2 rounded" %>
   </div>
 <% end %>

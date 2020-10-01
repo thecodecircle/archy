@@ -12,7 +12,7 @@
   <% end %>
 
   <div class="field">
-    <%= form.label :name %>
+    <%= form.label :name, "שם הצוות" %>
     <%= form.text_field :name %>
   </div>
 
@@ -26,11 +26,11 @@
   </div>
 
   <div class="field">
-    <%= form.label :users %>
+    <%= form.label :users, "משתמשים משויכים לצוות:", class: "block" %>
     <%= form.collection_select :user_ids, User.all, :id, :name, {prompt: 'בחירת חברי הצוות'}, {multiple: true} %>
   </div>
 
   <div class="actions">
-    <%= form.submit %>
+    <%= form.submit "שליחה", class: "p-2 rounded" %>
   </div>
 <% end %>

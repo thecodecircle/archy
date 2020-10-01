@@ -1,12 +1,12 @@
 <p id="notice"><%= notice %></p>
 
 <p>
-  <strong>Name:</strong>
+  <strong>שם הצוות:</strong>
   <%= @team.name %>
 </p>
 
 <p>
-  <strong>Users:</strong>
+  <strong>משתמשים משוייכים לצוות:</strong>
   <ul>
     <% @team.users.each do |user| %>
       <li><%= user.name %></li>
@@ -15,40 +15,49 @@
 </p>
 
 <p>
-  <strong>Tags:</strong>
+  <strong>תגיות:</strong>
   <%= @team.tag_list %>
 </p>
 
-<h1>Meetings</h1>
+<h1>פגישות של <%= @team.name %></h1>
 
-<table>
-  <thead>
-    <tr>
-      <th>Subject</th>
-      <th>Team</th>
-      <th>Content</th>
-      <th>Privacy</th>
-      <th>Attachment Count</th>
-      <th colspan="3"></th>
-    </tr>
-  </thead>
+<!--Container-->
+<div class="container w-full md:w-4/5 xl:w-3/5  mx-auto px-2 mt-20 text-gray-900">
+<!--Card-->
+  <div id='recipients' class="p-8 mt-6 lg:mt-0 rounded shadow bg-white">
+  	<table id="table" class="stripe hover">
+  		<thead>
+  			<tr>
+  				<th data-priority="1">כותרת</th>
+  				<!-- <th data-priority="2">צוות</th> -->
+  				<th data-priority="3">תוכן</th>
+  				<th data-priority="4">פרטיות</th>
+  				<th data-priority="5">מספר קבצים מצורפים</th>
+  				<th data-priority="6"></th>
+  				<th data-priority="7"></th>
+  				<th data-priority="8"></th>
+  			</tr>
+  		</thead>
+  		<tbody>
+        <% @team.meetings.each do |meeting| %>
+          <tr>
+              <td><%= meeting.subject %></td>
+              <!-- <td><%= Team.find(meeting.team_id).name %></td> -->
+              <td><%= meeting.content %></td>
+              <td><%= he_privacy[@meeting.privacy.to_sym] %></td>
+              <td><%= meeting.attachments.count %></td>
+              <td><%= link_to 'הצגה', team_meeting_path(@team, meeting) %></td>
+              <td><%= link_to 'עריכה', edit_team_meeting_path(@team, meeting) %></td>
+              <td><%= link_to 'מחיקה', team_meeting_path(@team, meeting), method: :delete, data: { confirm: 'בטוח\ה?' } %></td>
+          </tr>
+        <% end %>
+  		</tbody>
+  	</table>
+  </div>
+  <!--/Card-->
+</div>
+<!--/container-->
 
-  <tbody>
-    <% @team.meetings.each do |meeting| %>
-      <tr>
-        <td><%= meeting.subject %></td>
-        <td><%= Team.find(meeting.team_id).name %></td>
-        <td><%= meeting.content %></td>
-        <td><%= meeting.privacy %></td>
-        <td><%= meeting.attachments.count %></td>
-        <td><%= link_to 'Show', team_meeting_path(@team, meeting) %></td>
-        <td><%= link_to 'Edit', edit_team_meeting_path(@team, meeting) %></td>
-        <td><%= link_to 'Destroy', team_meeting_path(@team, meeting), method: :delete, data: { confirm: 'Are you sure?' } %></td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
-
-<%= link_to 'Edit', edit_team_path(@team) %> |
-<%= link_to 'Back', teams_path %> |
-<%= link_to 'New Meeting', new_team_meeting_path(@team) %>
+<%= link_to 'עריכת הצוות', edit_team_path(@team) %> |
+<%# link_to 'Back', teams_path %>
+<%= link_to 'פגישה חדשה', new_team_meeting_path(@team) %>

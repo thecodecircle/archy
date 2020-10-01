@@ -1,13 +1,13 @@
 <p id="notice"><%= notice %></p>
 
-<h1>Meetings</h1>
+<h1>פגישות</h1>
 
 <table>
   <thead>
     <tr>
-      <th>Team</th>
-      <th>Content</th>
-      <th>Privacy</th>
+      <th>צוות</th>
+      <th>תוכן</th>
+      <th>פרטיות</th>
       <th colspan="3"></th>
     </tr>
   </thead>
@@ -17,10 +17,10 @@
       <tr>
         <td><%= meeting.team_id %></td>
         <td><%= meeting.content %></td>
-        <td><%= meeting.privacy %></td>
-        <td><%= link_to 'Show', meeting %></td>
-        <td><%= link_to 'Edit', edit_meeting_path(meeting) %></td>
-        <td><%= link_to 'Destroy', meeting, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td><%= he_privacy[@meeting.privacy.to_sym] %></td>
+        <td><%= link_to 'הצגה', meeting %></td>
+        <td><%= link_to 'עריכה', edit_meeting_path(meeting) %></td>
+        <td><%= link_to 'מחיקה', meeting, method: :delete, data: { confirm: 'בטוח\ה?' } %></td>
       </tr>
     <% end %>
   </tbody>
@@ -28,4 +28,4 @@
 
 <br>
 
-<%= link_to 'New Meeting', new_meeting_path %>
+<%= link_to 'יצירת פגישה חדשה', new_meeting_path %>

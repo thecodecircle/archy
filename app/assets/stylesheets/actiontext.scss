@@ -6,6 +6,18 @@
 // = require trix/dist/trix
 @import "trix/dist/trix";
 
+.trix-button {
+  background-color: cyan !important;
+}
+
+.trix-content, .trix-input {
+  background-color: white;
+  color: black;
+}
+
+input, select {
+  color: black !important;
+}
 
 // We need to override trix.css’s image gallery styles to accommodate the
 // <action-text-attachment> element we wrap around attachments. Otherwise,

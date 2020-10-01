@@ -1,27 +1,33 @@
 <p id="notice"><%= notice %></p>
 
-<h1>Teams</h1>
+<h1>צוותים</h1>
 
-<table>
-  <thead>
-    <tr>
-      <th>Name</th>
-      <th colspan="3"></th>
-    </tr>
-  </thead>
-
-  <tbody>
-    <% @teams.each do |team| %>
-      <tr>
-        <td><%= team.name %></td>
-        <td><%= link_to 'Show', team %></td>
-        <td><%= link_to 'Edit', edit_team_path(team) %></td>
-        <td><%= link_to 'Destroy', team, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
-
-<br>
-
-<%= link_to 'New Team', new_team_path %>
+<!--Container-->
+<div class="container w-full md:w-4/5 xl:w-3/5  mx-auto px-2 mt-20 text-gray-900">
+<!--Card-->
+  <div id='recipients' class="p-8 mt-6 lg:mt-0 rounded shadow bg-white">
+  	<table id="table" class="stripe hover">
+  		<thead>
+  			<tr>
+  				<th data-priority="1">שם</th>
+  				<th data-priority="2"></th>
+  				<th data-priority="3"></th>
+  				<th data-priority="4"></th>
+  			</tr>
+  		</thead>
+  		<tbody>
+        <% @teams.each do |team| %>
+          <tr>
+              <td><%= team.name %></td>
+              <td><%= link_to 'הצגה', team %></td>
+              <td><%= link_to 'עריכה', edit_team_path(team) %></td>
+              <td><%= link_to 'מחיקה', team, method: :delete, data: { confirm: 'בטוח\ה?' } %></td>
+          </tr>
+        <% end %>
+  		</tbody>
+  	</table>
+  </div>
+  <!--/Card-->
+</div>
+<!--/container-->
+<%= link_to 'יצירת צוות חדש', new_team_path %>

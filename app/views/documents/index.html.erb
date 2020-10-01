@@ -1,6 +1,6 @@
 <!-- <p id="notice"><%= notice %></p> -->
 
-<h1 class="text-2xl text-center">מסמכים</h1>
+<h1>מסמכים</h1>
 
 <!--Container-->
 <div class="container w-full md:w-4/5 xl:w-3/5  mx-auto px-2 mt-20 text-gray-900">
@@ -26,7 +26,7 @@
               <td><%= document.description %></td>
               <td><%= document.content %></td>
               <td><%= User.find(document.user_id).name %></td>
-              <td><%= document.privacy %></td>
+              <td><%= he_privacy[@document.privacy.to_sym] %></td>
               <td><%= link_to 'הצגה', document %></td>
               <td><%= link_to 'עריכה', edit_document_path(document) %></td>
               <td><%= link_to 'מחיקה', document, method: :delete, data: { confirm: 'בטוח\ה?' } %></td>
@@ -41,4 +41,4 @@
 
 <br>
 
-<%= link_to 'מסמך חדש', new_document_path %>
+<%= link_to 'יצירת מסמך חדש', new_document_path %>

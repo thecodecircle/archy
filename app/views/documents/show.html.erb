@@ -1,36 +1,37 @@
 <p id="notice"><%= notice %></p>
 
-<p>
-  <strong>User:</strong>
-  <%= User.find(@document.user_id).name %>
-</p>
+<div class="mb-4">
+  <p>
+    <strong>נוצר ע"י:</strong>
+    <%= User.find(@document.user_id).name %>
+  </p>
 
-<p>
-  <strong>Title:</strong>
-  <%= @document.title %>
-</p>
+  <p>
+    <strong>כותרת:</strong>
+    <%= @document.title %>
+  </p>
 
-<p>
-  <strong>Content:</strong>
-  <%= @document.content %>
-</p>
+  <p>
+    <strong>תיאור:</strong>
+    <%= @document.description %>
+  </p>
 
-<p>
-  <strong>Description:</strong>
-  <%= @document.description %>
-</p>
+  <p>
+    <strong>תוכן:</strong>
+    <%= @document.content %>
+  </p>
 
-<p>
-  <strong>Tags:</strong>
-  <%= @document.tag_list %>
-</p>
+  <p>
+    <strong>תגיות:</strong>
+    <%= @document.tag_list %>
+  </p>
 
-<p>
-  <strong>Privacy:</strong>
-  <%= @document.privacy %>
-</p>
+  <p>
+    <strong>הגדרת פרטיות:</strong>
+    <%= he_privacy[@document.privacy.to_sym] %>
+  </p>
+</div>
 
 <%= @document.attachments.first %>
 
-<%= link_to 'Edit', edit_document_path(@document) %> |
-<%= link_to 'Back', documents_path %>
+<%= link_to 'עריכת המסמך', edit_document_path(@document) %>
