@@ -5,4 +5,7 @@ class Document < ApplicationRecord
   has_rich_text :description
   enum privacy: [:personal, :commons]
   acts_as_taggable_on :tags
+
+  include PgSearch::Model
+  multisearchable against: :title
 end

@@ -5,4 +5,7 @@ class Meeting < ApplicationRecord
   has_rich_text :content
   enum privacy: [:personal, :team, :commons]
   acts_as_taggable_on :tags
+
+  include PgSearch::Model
+  multisearchable against: :subject
 end

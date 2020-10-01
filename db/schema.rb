@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_09_24_173647) do
+ActiveRecord::Schema.define(version: 2020_09_30_124109) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -69,6 +69,15 @@ ActiveRecord::Schema.define(version: 2020_09_24_173647) do
     t.bigint "meeting_id", null: false
     t.index ["meeting_id", "user_id"], name: "index_meetings_users_on_meeting_id_and_user_id"
     t.index ["user_id", "meeting_id"], name: "index_meetings_users_on_user_id_and_meeting_id"
+  end
+
+  create_table "pg_search_documents", force: :cascade do |t|
+    t.text "content"
+    t.string "searchable_type"
+    t.bigint "searchable_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["searchable_type", "searchable_id"], name: "index_pg_search_documents_on_searchable_type_and_searchable_id"
   end
 
   create_table "taggings", id: :serial, force: :cascade do |t|
