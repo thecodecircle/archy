@@ -44,7 +44,7 @@
               <td><%= meeting.subject %></td>
               <!-- <td><%= Team.find(meeting.team_id).name %></td> -->
               <td><%= meeting.content %></td>
-              <td><%= he_privacy[@meeting.privacy.to_sym] %></td>
+              <td><%= he_privacy[meeting.privacy.to_sym] %></td>
               <td><%= meeting.attachments.count %></td>
               <td><%= link_to 'הצגה', team_meeting_path(@team, meeting) %></td>
               <td><%= link_to 'עריכה', edit_team_meeting_path(@team, meeting) %></td>
