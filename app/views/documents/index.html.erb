@@ -26,7 +26,7 @@
               <td><%= document.description %></td>
               <td><%= document.content %></td>
               <td><%= User.find(document.user_id).name %></td>
-              <td><%= he_privacy[document.privacy.to_sym] %></td>
+              <td><%= he_privacy[document.privacy.to_sym] if document.privacy.present? %></td>
               <td><%= link_to 'הצגה', document %></td>
               <td><%= link_to 'עריכה', edit_document_path(document) %></td>
               <td><%= link_to 'מחיקה', document, method: :delete, data: { confirm: 'בטוח\ה?' } %></td>
