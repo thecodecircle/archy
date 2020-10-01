@@ -1,6 +1,6 @@
 <% content_for :devise_form do %>
 
-  <h2 class="heading text-4xl font-bold pt-4 mb-8">הרשמה</h2>
+  <h2 class="heading text-4xl font-bold pt-4 mb-8 text-gray-800">הרשמה</h2>
 
     <%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
     <%= render "devise/shared/error_messages", resource: resource %>
@@ -19,7 +19,7 @@
       <div class="flex">
         <%= f.label :password, "סיסמה", class: "label" %>
         <% if @minimum_password_length %>
-        <span class="text-xs pl-1 text-grey-dark"><em>(<%= @minimum_password_length %> תווים לפחות)</em></span>
+        <span class="text-xs pl-1 text-gray-800"><em>(<%= @minimum_password_length %> תווים לפחות)</em></span>
         <% end %>
       </div>
       <%= f.password_field :password, autocomplete: "new-password", class: "input" %>
