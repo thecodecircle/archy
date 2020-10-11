@@ -31,4 +31,10 @@ class HomeController < ApplicationController
     redirect_to user_index_path
   end
 
+  def destroy_user
+    user = User.find(params[:clicked_user])
+    user.destroy
+    redirect_to user_index_path
+  end
+
 end

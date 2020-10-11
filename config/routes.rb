@@ -10,4 +10,5 @@ Rails.application.routes.draw do
   get 'user_index', to: 'home#user_index'
   get 'toggle_status', to: 'home#toggle_status'
   get 'toggle_admin', to: 'home#toggle_admin'
+  delete 'destroy_user', to: 'home#destroy_user'
 end

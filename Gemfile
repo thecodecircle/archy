@@ -56,4 +56,5 @@ gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 gem 'devise', '~> 4.7', '>= 4.7.3'
 gem 'hirb'
 gem 'acts-as-taggable-on', '~> 6.0'
-gem 'pg_search'
+# gem 'pg_search'
+gem "activestorage-office-previewer"

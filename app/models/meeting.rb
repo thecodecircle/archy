@@ -6,6 +6,6 @@ class Meeting < ApplicationRecord
   enum privacy: [:personal, :team, :commons]
   acts_as_taggable_on :tags
 
-  include PgSearch::Model
-  multisearchable against: :subject
+  # include PgSearch::Model
+  # multisearchable against: :subject
 end

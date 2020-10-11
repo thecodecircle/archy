@@ -3,6 +3,6 @@ class Team < ApplicationRecord
   has_many :meetings
   acts_as_taggable_on :tags
 
-  include PgSearch::Model
-  multisearchable against: :name
+  # include PgSearch::Model
+  # multisearchable against: :name
 end

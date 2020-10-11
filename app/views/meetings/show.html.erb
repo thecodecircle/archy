@@ -39,5 +39,19 @@
   </ul>
 </p>
 
+<% @meeting.attachments.each do |attachment| %>
+  <% if attachment.image? %>
+    <%= image_tag attachment %>
+  <% elsif attachment.video? %>
+    <%= video_tag url_for(attachment), controls: true %>
+  <% elsif attachment.audio? %>
+    <%= audio_tag attachment %>
+  <% elsif attachment.text? %>
+    <p><%= attachment %></p>
+  <% else %>
+    <%= image_tag attachment.preview(resize_to_limit: [100, 100]) %>
+  <% end %>
+<% end %>
+
 <%= link_to 'Edit', edit_team_meeting_path(@meeting) %> |
 <%# link_to 'Back', meetings_path %>
