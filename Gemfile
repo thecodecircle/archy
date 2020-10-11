@@ -58,3 +58,4 @@ gem 'hirb'
 gem 'acts-as-taggable-on', '~> 6.0'
 # gem 'pg_search'
 gem "activestorage-office-previewer"
+gem 'poppler'
