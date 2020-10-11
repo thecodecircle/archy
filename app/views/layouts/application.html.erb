@@ -60,6 +60,11 @@
       				<!-- <li class="mr-3">
       					<a class="inline-block py-2 px-4  font-bold no-underline" href="#">Active</a>
       				</li> -->
+              <% if user_signed_in? && current_user.admin? %>
+        				<li class="mr-3">
+                  <%= link_to "ניהול משתמשים", user_index_path, class: "inline-block no-underline hover:text-gray-800 hover:text-underline py-2 px-4" %>
+        				</li>
+              <% end %>
       				<li class="mr-3">
                 <%= link_to "מסמכים", documents_path, class: "inline-block no-underline hover:text-gray-800 hover:text-underline py-2 px-4" %>
       				</li>

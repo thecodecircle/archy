@@ -12,12 +12,12 @@
   <% end %>
 
   <div class="field">
-    <%= form.label :subject %>
+    <%= form.label :subject, "נושא הפגישה" %>
     <%= form.text_area :subject %>
   </div>
 
   <div class="field">
-    <%= form.label :content %>
+    <%= form.label :content, "תוכן הפגישה" %>
     <%= form.rich_text_area :content %>
   </div>
 
@@ -31,7 +31,7 @@
   </div>
 
   <div class="field">
-    <%= form.label :users %>
+    <%= form.label :users, "חברי וחברות צוות שנכחו בפגישה" %>
     <%= form.collection_select :user_ids, @team.users, :id, :name, {prompt: 'בחירת חברי צוות נוכחים'}, {multiple: true} %>
   </div>
 

@@ -26,6 +26,11 @@ class DocumentsController < ApplicationController
   def create
     @document = Document.new(document_params)
     @document.user = current_user
+    if current_user.admin?
+      @document.approved!
+    else
+      @document.not_approved!
+    end
 
     respond_to do |format|
       if @document.save
