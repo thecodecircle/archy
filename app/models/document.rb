@@ -9,4 +9,7 @@ class Document < ApplicationRecord
 
   # include PgSearch::Model
   # multisearchable against: :title
+
+  validates :title,  presence: true
+  validates :privacy, inclusion: { in: Document.privacies.keys }
 end

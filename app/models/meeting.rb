@@ -8,4 +8,6 @@ class Meeting < ApplicationRecord
 
   # include PgSearch::Model
   # multisearchable against: :subject
+  validates :subject,  presence: true
+  validates :privacy, inclusion: { in: Meeting.privacies.keys }
 end
