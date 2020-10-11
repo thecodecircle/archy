@@ -44,7 +44,16 @@
   <div class="field">
     <%= form.label :attachments, "העלאת קבצים:" %>
     <%= form.file_field :attachments, multiple: true %>
-    <p style="font-size: 0.8rem">ניתן להעלות קבצי אופיס, תמונות, סרטונים והקלטות קוליות</p>
+    <p style="font-size: 0.8rem">ניתן להעלות קבצי PDF,  אופיס, תמונות, סרטונים והקלטות קוליות</p>
+  </div>
+
+  <div class="field">
+    <%= form.label :current_attachments, "קבצים מצורפים כרגע:" %>
+    <ul>
+      <% @meeting.attachments.all.each do |attachment| %>
+        <li class="my-4"><%= image_tag attachment.preview(resize_to_limit: [300, 300]) %></li>
+      <% end %>
+    </ul>
   </div>
 
   <div class="actions">

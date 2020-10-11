@@ -1,37 +1,37 @@
 <p id="notice"><%= notice %></p>
 
 <p>
-  <strong>Subject:</strong>
+  <strong>נושא הפגישה:</strong>
   <%= @meeting.subject %>
 </p>
 
 <p>
-  <strong>Team:</strong>
+  <strong>צוות:</strong>
   <%= Team.find(@meeting.team_id).name %>
 </p>
 
 <p>
-  <strong>Content:</strong>
+  <strong>תוכן הפגישה:</strong>
   <%= @meeting.content %>
 </p>
 
 <p>
-  <strong>Tags:</strong>
+  <strong>תגיות:</strong>
   <%= @meeting.tag_list %>
 </p>
 
 <p>
-  <strong>Privacy:</strong>
+  <strong>פרטיות:</strong>
   <%= he_privacy[@meeting.privacy.to_sym] %>
 </p>
 
 <p>
-  <strong>Attachment count:</strong>
+  <strong>כמות קבצים מצורפים:</strong>
   <%= @meeting.attachments.count %>
 </p>
 
 <p>
-  <strong>Users present:</strong>
+  <strong>חברי צוות שנכחו בפגישה:</strong>
   <ul>
     <% @meeting.users.each do |user| %>
       <li><%= user.name %></li>
@@ -39,21 +39,28 @@
   </ul>
 </p>
 
-<% @meeting.attachments.each do |attachment| %>
-  <% if attachment.image? %>
-    <%= image_tag attachment %>
-  <% elsif attachment.video? %>
-    <%= video_tag url_for(attachment), controls: true %>
-  <% elsif attachment.audio? %>
-    <%= audio_tag attachment %>
-  <% elsif attachment.text? %>
-    <p><%= attachment %></p>
-  <% else %>
-    <%= link_to url_for(attachment) do %>
-      <%= image_tag attachment.preview(resize_to_limit: [1000, 1000]) %>
+<p>
+  <strong>קבצים מצורפים:</strong>
+  <ul>
+    <% @meeting.attachments.each do |attachment| %>
+      <% if attachment.image? %>
+        <li class="mt-4"><%= image_tag attachment %></li>
+      <% elsif attachment.video? %>
+        <li class="mt-4"><%= video_tag url_for(attachment), controls: true %></li>
+      <% elsif attachment.audio? %>
+        <li class="mt-4"><%= audio_tag attachment %></li>
+      <% elsif attachment.text? %>
+        <li class="mt-4"><p><%= attachment %></p></li>
+      <% else %>
+        <%= link_to url_for(attachment) do %>
+          <li class="mt-4"><%= image_tag attachment.preview(resize_to_limit: [1000, 1000]) %></li>
+        <% end %>
+      <% end %>
     <% end %>
-  <% end %>
-<% end %>
+</ul>
+</p>
 
-<%= link_to 'Edit', edit_team_meeting_path(@meeting) %> |
+<br>
+<%= link_to 'עריכת הפגישה', edit_team_meeting_path(@meeting), class: "bg-white hover:bg-gray-400 text-blue-600 font-bold py-2 px-4 rounded-full" %>
+<br>
 <%# link_to 'Back', meetings_path %>
