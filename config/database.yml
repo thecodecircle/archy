@@ -81,5 +81,5 @@ test:
 production:
   <<: *default
   database: archy_production
-  username: archy
-  password: <%= ENV['ARCHY_DATABASE_PASSWORD'] %>
+  username: rails
+  password: <%= ENV['RAILS_DATABASE_PASSWORD'] %>
