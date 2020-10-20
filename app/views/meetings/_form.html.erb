@@ -51,7 +51,8 @@
     <%= form.label :current_attachments, "קבצים מצורפים כרגע:" %>
     <ul>
       <% @meeting.attachments.all.each do |attachment| %>
-        <li class="my-4"><%= image_tag attachment.preview(resize_to_limit: [300, 300]) %></li>
+        <li class="my-4"><%# image_tag attachment.preview(resize_to_limit: [300, 300]) %></li>
+        <li class="my-4"><%= attachment.blob.filename %></li>
       <% end %>
     </ul>
   </div>
