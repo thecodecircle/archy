@@ -10,7 +10,7 @@ class User < ApplicationRecord
   after_create :set_status
 
   validates :admin,  inclusion: { in: [true, false] }
-  validates :status, inclusion: { in: User.statuses.keys }
+  # validates :status, inclusion: { in: User.statuses.keys }
 
   private
     def set_status
