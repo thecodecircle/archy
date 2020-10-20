@@ -37,7 +37,7 @@
 
   <div class="field">
     <%= form.label :privacy, "הגדרת פרטיות:" %>
-    <% privacy_options = [["פרטי", "personal"], ["ציבורי", "commons"]] %>
+    <% privacy_options = [["פרטי", "personal"], ["פנים תנועתי", "internal"], ["ציבורי", "commons"]] %>
     <%= form.select :privacy, privacy_options, { include_blank: true } %>
   </div>
 
