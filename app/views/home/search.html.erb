@@ -9,23 +9,29 @@
   		<thead>
   			<tr>
   				<th data-priority="1">כותרת</th>
-  				<th data-priority="2">תיאור/צוות</th>
+  				<th data-priority="2">תיאור</th>
   				<th data-priority="3">תוכן</th>
+          <th data-priority="4">משתמש/צוות</th>
+  				<th data-priority="5">פרטיות</th>
   			</tr>
   		</thead>
   		<tbody>
         <% Document.all.each do |document| %>
           <tr>
-              <td><%= document.title %></td>
+              <td><%= link_to document.title, document %></td>
               <td><%= document.description %></td>
               <td><%= document.content %></td>
+              <td><%= User.find(document.user_id).name %></td>
+              <td><%= he_privacy[document.privacy.to_sym] if document.privacy.present? %></td>
           </tr>
         <% end %>
         <% Meeting.all.each do |meeting| %>
           <tr>
-              <td><%= meeting.subject %></td>
-              <td><%= meeting.team.name %> </td>
+              <td><%= link_to meeting.subject, team_meeting_path(meeting, meeting.team) %></td>
+              <td>לפגישות אין תיאור</td>
               <td><%= meeting.content %></td>
+              <td><%= meeting.team.name %> </td>
+              <td><%= he_privacy[meeting.privacy.to_sym] %></td>
           </tr>
         <% end %>
   		</tbody>
