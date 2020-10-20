@@ -2,7 +2,7 @@
 lock "~> 3.14.1"
 
 # Change these
-server '159.89.111.141', roles: [:web, :app, :db], primary: true
+server '46.101.203.165', roles: [:web, :app, :db], primary: true
 
 set :repo_url,        'git@github.com:thecodecircle/archy.git'
 set :application,     'archy'
