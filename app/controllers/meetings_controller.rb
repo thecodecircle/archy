@@ -65,6 +65,14 @@ class MeetingsController < ApplicationController
     end
   end
 
+  def send_meeting
+    @meeting = Meeting.find(params[:meeting])
+    @user = User.find(params[:user])
+    TeamMailer.meeting_email(@meeting, @user).deliver_now
+    puts "******************* send mail*********************"
+    redirect_to team_meeting_path(@meeting, @meeting.team, sent: "true")
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_meeting

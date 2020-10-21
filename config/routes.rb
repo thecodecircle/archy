@@ -11,4 +11,5 @@ Rails.application.routes.draw do
   get 'toggle_status', to: 'home#toggle_status'
   get 'toggle_admin', to: 'home#toggle_admin'
   delete 'destroy_user', to: 'home#destroy_user'
+  get 'send_meeting', to: 'meetings#send_meeting'
 end
