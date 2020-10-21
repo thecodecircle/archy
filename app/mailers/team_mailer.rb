@@ -5,6 +5,6 @@ class TeamMailer < ApplicationMailer
     @meeting = meeting
     @user = user
     puts "********************** meeting email ******************"
-    mail(to: "codecircle13@gmail.com", subject: "סיכום פגישה - ארכיון השומר הצעיר")
+    mail(to: @meeting.team.users, subject: "סיכום פגישה של #{@meeting.team.name} - ארכיון השומר הצעיר")
   end
 end
