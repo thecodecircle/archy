@@ -18,6 +18,7 @@ class User < ApplicationRecord
         self.approved!
       else
         self.not_approved!
+        TeamMailer.notify_registration(self).deliver_now
       end
     end
 end

@@ -69,7 +69,6 @@ class MeetingsController < ApplicationController
     @meeting = Meeting.find(params[:meeting])
     @user = User.find(params[:user])
     TeamMailer.meeting_email(@meeting, @user).deliver_now
-    puts "******************* send mail*********************"
     redirect_to team_meeting_path(@meeting.team, @meeting, sent: "true")
   end
 

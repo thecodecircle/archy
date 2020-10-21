@@ -12,4 +12,9 @@ class TeamMailer < ApplicationMailer
     end
     mail(to: @meeting.team.users.pluck(:email), subject: "סיכום פגישה של #{@meeting.team.name} - ארכיון השומר הצעיר")
   end
+
+  def notify_registration(user)
+    @user = user
+    mail(to: User.where(admin: true).pluck(:email), subject: "רישום חדש לארכיון השומר הצעיר - #{user.name}")
+  end
 end
