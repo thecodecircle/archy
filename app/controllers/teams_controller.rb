@@ -25,6 +25,7 @@ class TeamsController < ApplicationController
   # POST /teams.json
   def create
     @team = Team.new(team_params)
+    @team.users << current_user
 
     respond_to do |format|
       if @team.save
@@ -59,6 +60,12 @@ class TeamsController < ApplicationController
       format.html { redirect_to teams_url, notice: 'Team was successfully destroyed.' }
       format.json { head :no_content }
     end
+  end
+
+  def join_team
+    @team = Team.find(params[:t])
+    @team.users << current_user
+    redirect_to team_path(@team)
   end
 
   private

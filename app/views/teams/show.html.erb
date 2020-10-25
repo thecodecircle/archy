@@ -60,4 +60,5 @@
 
 <%= link_to 'עריכת הצוות', edit_team_path(@team) %> |
 <%# link_to 'Back', teams_path %>
-<%= link_to 'פגישה חדשה', new_team_meeting_path(@team) %>
+<%= link_to 'פגישה חדשה', new_team_meeting_path(@team) %> |
+<a href="whatsapp://send?text=<%= request.base_url %>/join_team?t=<%= @team.id %>">שליחת קישור הצטרפות לצוות בוואטסאפ</a>
