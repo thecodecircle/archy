@@ -42,11 +42,13 @@
   <ul>
     <% @document.attachments.each do |attachment| %>
       <% if attachment.image? %>
-        <li class="mt-4"><%= image_tag attachment %></li>
+        <li class="mt-4"><%= link_to url_for(attachment) do %>
+          <%= image_tag attachment, alt: attachment.filename, class: "h-64" %>
+        <% end %></li>
       <% elsif attachment.video? %>
-        <li class="mt-4"><%= video_tag url_for(attachment), controls: true %></li>
+        <li class="mt-4"><%= video_tag url_for(attachment), controls: true, class: "h-64" %></li>
       <% elsif attachment.audio? %>
-        <li class="mt-4"><%= audio_tag attachment %></li>
+        <li class="mt-4"><%= audio_tag url_for(attachment) %></li>
       <% elsif attachment.text? %>
         <li class="mt-4"><p><%= attachment %></p></li>
       <% else %>
