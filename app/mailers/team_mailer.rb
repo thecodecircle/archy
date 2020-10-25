@@ -18,8 +18,8 @@ class TeamMailer < ApplicationMailer
     mail(to: User.where(admin: true).pluck(:email), subject: "רישום חדש לארכיון השומר הצעיר - #{user.name}")
   end
 
-  def notify_document(user)
+  def notify_document(user, document)
     @user = user
-    mail(to: User.where(admin: true).pluck(:email), subject: "מסמך חדש בארכיון השומר הצעיר - #{user.name}")
+    mail(to: User.where(admin: true).pluck(:email), subject: "מסמך חדש בארכיון השומר הצעיר - #{document.title}")
   end
 end

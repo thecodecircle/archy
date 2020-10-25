@@ -30,7 +30,7 @@ class DocumentsController < ApplicationController
       @document.approved!
     else
       @document.not_approved!
-      TeamMailer.notify_document(current_user).deliver_now
+      TeamMailer.notify_document(current_user, @document).deliver_now
     end
 
     if params[:document][:date].empty?
@@ -39,7 +39,7 @@ class DocumentsController < ApplicationController
 
     respond_to do |format|
       if @document.save
-        format.html { redirect_to @document, notice: 'Document was successfully created.' }
+        format.html { redirect_to @document, notice: 'המסמך נוצר בהצלחה ומחכה לאישור המנהלות' }
         format.json { render :show, status: :created, location: @document }
       else
         format.html { render :new }
