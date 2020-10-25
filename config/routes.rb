@@ -13,4 +13,5 @@ Rails.application.routes.draw do
   delete 'destroy_user', to: 'home#destroy_user'
   get 'send_meeting', to: 'meetings#send_meeting'
   get 'join_team', to: 'teams#join_team'
+  get 'profile', to: 'home#profile'
 end

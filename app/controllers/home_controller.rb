@@ -37,4 +37,8 @@ class HomeController < ApplicationController
     redirect_to user_index_path
   end
 
+  def profile
+    @user = current_user
+  end
+
 end

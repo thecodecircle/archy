@@ -8,6 +8,7 @@ class User < ApplicationRecord
   has_and_belongs_to_many :meetins, join_table: "meetings_users"
   enum status: [:not_approved, :approved]
   after_create :set_status
+  acts_as_taggable_on :achievements
 
   validates :admin,  inclusion: { in: [true, false] }
   # validates :status, inclusion: { in: User.statuses.keys }

@@ -1,0 +1,37 @@
+<h1>פרופיל</h1>
+<div class="my-2">
+  <h3 class="text-2xl">הצוותים שלי</h3>
+  <% if @user.teams.empty? %>
+    אין צוותים...
+  <% else %>
+    <ul>
+      <% @user.teams.each do |team| %>
+      <li><%= link_to team.name, team %></li>
+      <% end %>
+    </ul>
+  <% end %>
+</div>
+<div class="my-2">
+  <h3 class="text-2xl">מסמכים שהעליתי</h3>
+  <% if @user.documents.empty? %>
+    אין מסמכים שהועלו
+  <% else %>
+    <ul>
+      <% @user.documents.each do |document| %>
+      <li><%= link_to document.title, document %></li>
+      <% end %>
+    </ul>
+  <% end %>
+</div>
+<div class="my-2">
+  <h3 class="text-2xl">הישגים</h3>
+  <% if @user.achievement_list.empty? %>
+    אין הישגים עדיין
+  <% else %>
+    <ul>
+      <% @user.achievement_list.each do |achievement| %>
+      <li><%= achievement %></li>
+      <% end %>
+    </ul>
+  <% end %>
+</div>
