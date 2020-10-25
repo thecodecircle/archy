@@ -1,12 +1,11 @@
 Rails.application.routes.draw do
   resources :teams do
-    resources :meetings
+    resources :meetings, except: [:index]
   end
-  resources :documents
+  resources :documents, except: [:index]
   devise_for :users
   root to: 'home#index'
   get 'search', to: 'home#search'
-  get 'pashi', to: 'home#pashi'
   get 'user_index', to: 'home#user_index'
   get 'toggle_status', to: 'home#toggle_status'
   get 'toggle_admin', to: 'home#toggle_admin'

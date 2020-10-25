@@ -5,8 +5,8 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :validatable
   has_many :documents
   has_and_belongs_to_many :teams, join_table: "teams_users"
-  has_and_belongs_to_many :meetins, join_table: "meetings_users"
-  enum status: [:not_approved, :approved]
+  has_and_belongs_to_many :meetings, join_table: "meetings_users"
+  enum status: [:not_approved, :internal]
   after_create :set_status
   acts_as_taggable_on :achievements
 
@@ -16,7 +16,7 @@ class User < ApplicationRecord
   private
     def set_status
       if self.admin?
-        self.approved!
+        self.internal!
       else
         self.not_approved!
         TeamMailer.notify_registration(self).deliver_now

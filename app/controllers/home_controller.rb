@@ -4,11 +4,25 @@ class HomeController < ApplicationController
   end
 
   def search
-    @documents = Document.all
-    @meetings = Meeting.all
-  end
-
-  def pashi
+    if user_signed_in?
+      if current_user.admin?
+        if params[:approving]
+          @documents = Document.not_approved
+        else
+          @documents = Document.approved
+          @meetings = Meeting.all
+        end
+      else
+        @documents = Document.approved.commons
+        @documents = @documents + Document.approved.internal if current_user.status == "internal"
+        @documents = @documents + Document.approved.personal.where(user_id: current_user.id)
+        @meetings = Meeting.commons
+        @meetings = @meetings + Meeting.team.where(team_id: current_user.teams.ids)
+      end
+    else
+      @documents = Document.approved.commons
+      @meetings = Meeting.commons
+    end
   end
 
   def user_index

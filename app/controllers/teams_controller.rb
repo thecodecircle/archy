@@ -1,5 +1,6 @@
 class TeamsController < ApplicationController
-  before_action :set_team, only: [:show, :edit, :update, :destroy]
+  before_action :set_team, only: [:show, :edit, :update, :destroy, :restrict_team]
+  before_action :restrict_team, only: [:show, :edit, :update, :destroy]
 
   # GET /teams
   # GET /teams.json

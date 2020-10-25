@@ -10,7 +10,8 @@ module ApplicationHelper
   def he_status
     he_status = {
       not_approved: "לא מאושר",
-      approved: "מאושר"
+      approved: "מאושר",
+      internal: "פנימי"
     }
   end
   def he_bool

@@ -1,11 +1,12 @@
 class DocumentsController < ApplicationController
-  before_action :set_document, only: [:show, :edit, :update, :destroy]
+  before_action :set_document, only: [:show, :edit, :update, :destroy, :restrict_document]
+  before_action :restrict_document, only: [:show, :edit, :update, :destroy]
 
   # GET /documents
   # GET /documents.json
-  def index
-    @documents = Document.all
-  end
+  # def index
+  #   @documents = Document.all
+  # end
 
   # GET /documents/1
   # GET /documents/1.json
@@ -81,5 +82,9 @@ class DocumentsController < ApplicationController
     # Only allow a list of trusted parameters through.
     def document_params
       params.require(:document).permit(:user_id, :content, :description, :title, :date, :privacy, :tag_list, attachments: [])
+    end
+
+    def restrict_document
+      redirect_to root_path unless current_user.admin? || @document.commons? || (@document.internal? && current_user.internal?) || (@document.personal? && @document.user_id == current_user.id)
     end
 end

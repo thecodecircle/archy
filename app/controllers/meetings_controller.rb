@@ -1,11 +1,12 @@
 class MeetingsController < ApplicationController
-  before_action :set_meeting, only: [:show, :edit, :update, :destroy]
+  before_action :set_meeting, only: [:show, :edit, :update, :destroy, :restrict_meeting]
+  before_action :restrict_meeting, only: [:show, :edit, :update, :destroy]
 
   # GET /meetings
   # GET /meetings.json
-  def index
-    @meetings = Meeting.all
-  end
+  # def index
+  #   @meetings = Meeting.all
+  # end
 
   # GET /meetings/1
   # GET /meetings/1.json
@@ -81,6 +82,10 @@ class MeetingsController < ApplicationController
     # Only allow a list of trusted parameters through.
     def meeting_params
       params.require(:meeting).permit(:team_id, :content, :privacy, :subject, :tag_list, attachments: [], user_ids: [])
+    end
+
+    def restrict_meeting
+      redirect_to root_path unless current_user.admin? || @meeting.commons? || (@meeting.team? && @meeting.team.users.ids(include?(current_user.id)))
     end
 
 end

@@ -1,30 +1,54 @@
-<h1>פרופיל</h1>
+<h1>הפרופיל של <%= current_user.name %></h1>
 <div class="my-2">
-  <h3 class="text-2xl">הצוותים שלי</h3>
-  <% if @user.teams.empty? %>
-    אין צוותים...
-  <% else %>
-    <ul>
-      <% @user.teams.each do |team| %>
-      <li><%= link_to team.name, team %></li>
-      <% end %>
-    </ul>
-  <% end %>
-</div>
+
+  <!--Container-->
+  <div class="container w-full md:w-4/5  mx-auto px-2 mt-20 text-gray-900">
+    <h3 class="text-white text-2xl">הדברים שלי</h3>
+  <!--Card-->
+    <div id='recipients' class="p-8 mt-6 lg:mt-0 rounded shadow bg-white">
+    	<table id="table" class="stripe hover">
+    		<thead>
+    			<tr>
+    				<th data-priority="1">כותרת</th>
+    				<th data-priority="2">תיאור</th>
+            <th data-priority="4">משתמש/צוות</th>
+    				<th data-priority="5">פרטיות</th>
+    				<th data-priority="6">שנה</th>
+    				<th data-priority="7">מאושר</th>
+    			</tr>
+    		</thead>
+    		<tbody>
+          <% current_user.documents.each do |document| %>
+            <tr>
+                <td><%= link_to document.title, document %></td>
+                <td><%= document.description %></td>
+                <td><%= User.find(document.user_id).name %></td>
+                <td><%= he_privacy[document.privacy.to_sym] if document.privacy.present? %></td>
+                <td><%= document.date.strftime("%Y") if document.date %></td>
+                <td><%= link_to he_status[document.status.to_sym], toggle_status_path(clicked_document: document.id) %></td>
+            </tr>
+          <% end %>
+          <% current_user.teams.each do |team| %>
+            <% team.meetings.each do |meeting| %>
+              <tr>
+                  <td><%= link_to meeting.subject, team_meeting_path(meeting, meeting.team) %></td>
+                  <td>לפגישות אין תיאור</td>
+                  <td><%= meeting.team.name %> </td>
+                  <td><%= he_privacy[meeting.privacy.to_sym] %></td>
+                  <td><%= meeting.created_at.strftime("%Y") %></td>
+                  <td>פגישות לא צריכות אישור</td>
+              </tr>
+            <% end %>
+          <% end %>
+    		</tbody>
+    	</table>
+    </div>
+    <!--/Card-->
+  </div>
+  <!--/container-->
+
 <div class="my-2">
-  <h3 class="text-2xl">מסמכים שהעליתי</h3>
-  <% if @user.documents.empty? %>
-    אין מסמכים שהועלו
-  <% else %>
-    <ul>
-      <% @user.documents.each do |document| %>
-      <li><%= link_to document.title, document %></li>
-      <% end %>
-    </ul>
-  <% end %>
-</div>
-<div class="my-2">
-  <h3 class="text-2xl">הישגים</h3>
+  <h3 class="text-2xl">ההישגים שלי</h3>
   <% if @user.achievement_list.empty? %>
     אין הישגים עדיין
   <% else %>
