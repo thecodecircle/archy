@@ -4,7 +4,7 @@
   <h1>ממשק אישור מסמכים</h1>
 <% end %>
 
-<%= link_to "ממשק אישור מסמכים", search_path(approving: "true") if current_user.admin? && params[:approving] != "true" %>
+<%= link_to "ממשק אישור מסמכים", search_path(approving: "true") if user_signed_in? && current_user.admin? && params[:approving] != "true" %>
 <!--Container-->
 <div class="container w-full md:w-4/5  mx-auto px-2 mt-20 text-gray-900">
 <!--Card-->
