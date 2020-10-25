@@ -22,6 +22,11 @@
   </p>
 
   <p>
+    <strong>תאריך יצירת המסמך:</strong>
+    <%= @document.date.strftime("%d/%m/%Y") %>
+  </p>
+
+  <p>
     <strong>תגיות:</strong>
     <%= @document.tag_list %>
   </p>

@@ -32,6 +32,10 @@ class DocumentsController < ApplicationController
       @document.not_approved!
     end
 
+    if params[:document][:date].empty?
+      @document.date = Date.today
+    end
+
     respond_to do |format|
       if @document.save
         format.html { redirect_to @document, notice: 'Document was successfully created.' }
@@ -75,6 +79,6 @@ class DocumentsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def document_params
-      params.require(:document).permit(:user_id, :content, :description, :title, :privacy, :tag_list, attachments: [])
+      params.require(:document).permit(:user_id, :content, :description, :title, :date, :privacy, :tag_list, attachments: [])
     end
 end

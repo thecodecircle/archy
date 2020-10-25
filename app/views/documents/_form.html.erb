@@ -27,6 +27,11 @@
   </div>
 
   <div class="field">
+    <%= form.label :date, "תאריך יצירת המסמך (אפשר להשאיר ריק אם זה היום)" %>
+    <%= form.date_field :date %>
+  </div>
+
+  <div class="field">
     <%= form.label :tag_list, "תגיות:" %>
     <%=
       form.text_field :tag_list,
