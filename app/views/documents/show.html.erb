@@ -64,5 +64,5 @@
 <br>
 <% if @document.user.id == current_user.id || current_user.admin? %>
   <%= link_to 'עריכת המסמך', edit_document_path(@document), class: "bg-white hover:bg-gray-400 text-blue-600 font-bold py-2 px-4 rounded-full" %>
-  <%= link_to 'מחיקת המסמך', document_path(@document), method: :delete, class: "bg-white hover:bg-gray-400 text-blue-600 font-bold py-2 px-4 rounded-full" %>
+  <%= link_to 'מחיקת המסמך', document_path(@document), method: :delete, data: { confirm: 'בטוח\ה?' }, class: "bg-white hover:bg-gray-400 text-blue-600 font-bold py-2 px-4 rounded-full" %>
 <% end %>

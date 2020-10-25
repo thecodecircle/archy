@@ -4,6 +4,8 @@ class HomeController < ApplicationController
   end
 
   def search
+    @documents = Document.all
+    @meetings = Meeting.all
   end
 
   def pashi
@@ -14,10 +16,17 @@ class HomeController < ApplicationController
   end
 
   def toggle_status
-    user = User.find(params[:clicked_user])
-    user.status = 1 - user.read_attribute_before_type_cast(:status)
-    user.save
-    redirect_to user_index_path
+    if params[:clicked_user]
+      user = User.find(params[:clicked_user])
+      user.status = 1 - user.read_attribute_before_type_cast(:status)
+      user.save
+      redirect_to user_index_path
+    elsif params[:clicked_document]
+      document = Document.find(params[:clicked_document])
+      document.status = 1 - document.read_attribute_before_type_cast(:status)
+      document.save
+      redirect_to search_path(approving: true)
+    end
   end
 
   def toggle_admin

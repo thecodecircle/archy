@@ -30,6 +30,7 @@ class DocumentsController < ApplicationController
       @document.approved!
     else
       @document.not_approved!
+      TeamMailer.notify_document(current_user).deliver_now
     end
 
     if params[:document][:date].empty?

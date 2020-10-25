@@ -1,6 +1,10 @@
-<h1>חיפוש חומרים</h1>
+<% if params[:approving] != "true" %>
+  <h1>חיפוש חומרים</h1>
+<% else %>
+  <h1>ממשק אישור מסמכים</h1>
+<% end %>
 
-
+<%= link_to "ממשק אישור מסמכים", search_path(approving: "true") if current_user.admin? && params[:approving] != "true" %>
 <!--Container-->
 <div class="container w-full md:w-4/5  mx-auto px-2 mt-20 text-gray-900">
 <!--Card-->
@@ -13,11 +17,14 @@
   				<th data-priority="3">תוכן</th>
           <th data-priority="4">משתמש/צוות</th>
   				<th data-priority="5">פרטיות</th>
-  				<th data-priority="5">שנה</th>
+  				<th data-priority="6">שנה</th>
+          <% if params[:approving] && current_user.admin? %>
+    				<th data-priority="7">מאושר</th>
+          <% end %>
   			</tr>
   		</thead>
   		<tbody>
-        <% Document.all.each do |document| %>
+        <% @documents.each do |document| %>
           <tr>
               <td><%= link_to document.title, document %></td>
               <td><%= document.description %></td>
@@ -25,17 +32,22 @@
               <td><%= User.find(document.user_id).name %></td>
               <td><%= he_privacy[document.privacy.to_sym] if document.privacy.present? %></td>
               <td><%= document.date.strftime("%Y") if document.date %></td>
+              <% if params[:approving] && current_user.admin? %>
+                <td><%= link_to he_status[document.status.to_sym], toggle_status_path(clicked_document: document.id) %></td>
+              <% end %>
           </tr>
         <% end %>
-        <% Meeting.all.each do |meeting| %>
-          <tr>
-              <td><%= link_to meeting.subject, team_meeting_path(meeting, meeting.team) %></td>
-              <td>לפגישות אין תיאור</td>
-              <td><%= meeting.content %></td>
-              <td><%= meeting.team.name %> </td>
-              <td><%= he_privacy[meeting.privacy.to_sym] %></td>
-              <td><%= meeting.created_at.strftime("%Y") %></td>
-          </tr>
+        <% unless params[:approving] %>
+          <% @meetings.each do |meeting| %>
+            <tr>
+                <td><%= link_to meeting.subject, team_meeting_path(meeting, meeting.team) %></td>
+                <td>לפגישות אין תיאור</td>
+                <td><%= meeting.content %></td>
+                <td><%= meeting.team.name %> </td>
+                <td><%= he_privacy[meeting.privacy.to_sym] %></td>
+                <td><%= meeting.created_at.strftime("%Y") %></td>
+            </tr>
+          <% end %>
         <% end %>
   		</tbody>
   	</table>

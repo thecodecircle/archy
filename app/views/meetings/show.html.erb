@@ -1,3 +1,6 @@
+<% if params[:sent] %>
+<strong>מייל נשלח בהצלחה</strong>
+<% end %>
 <p id="notice"><%= notice %></p>
 
 <p>
@@ -61,10 +64,10 @@
 </p>
 
 <br>
-<%= link_to 'עריכת הפגישה', edit_team_meeting_path(@meeting), class: "bg-white hover:bg-gray-400 text-blue-600 font-bold py-2 px-4 rounded-full" %>
-<%= link_to 'שליחת הפגישה במייל לחברי הצוות', send_meeting_path(meeting: @meeting.id, user: current_user.id), class: "bg-white hover:bg-gray-400 text-blue-600 font-bold py-2 px-4 rounded-full" %>
-<% if params[:sent] %>
-  <strong>מייל נשלח בהצלחה</strong>
+<% if @meeting.team.users.ids.include?(current_user.id) || current_user.admin? %>
+  <%= link_to 'עריכת הפגישה', edit_team_meeting_path(@meeting), class: "bg-white hover:bg-gray-400 text-blue-600 font-bold py-2 px-4 rounded-full" %>
+  <%= link_to 'מחיקת הפגישה', team_meeting_path(@meeting), method: :delete, data: { confirm: 'בטוח\ה?' }, class: "bg-white hover:bg-gray-400 text-blue-600 font-bold py-2 px-4 rounded-full" %>
+  <%= link_to 'שליחת הפגישה במייל לחברי הצוות', send_meeting_path(meeting: @meeting.id, user: current_user.id), class: "bg-white hover:bg-gray-400 text-blue-600 font-bold py-2 px-4 rounded-full" %>
 <% end %>
 <br>
 <%# link_to 'Back', meetings_path %>
