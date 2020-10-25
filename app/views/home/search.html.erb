@@ -16,10 +16,12 @@
   				<th data-priority="2">תיאור</th>
   				<th data-priority="3">תוכן</th>
           <th data-priority="4">משתמש/צוות</th>
-  				<th data-priority="5">פרטיות</th>
   				<th data-priority="6">שנה</th>
-          <% if params[:approving] && current_user.admin? %>
-    				<th data-priority="7">מאושר</th>
+          <% if user_signed_in? && current_user.admin? %>
+            <th data-priority="5">פרטיות</th>
+            <% if params[:approving] %>
+      				<th data-priority="7">מאושר</th>
+            <% end %>
           <% end %>
   			</tr>
   		</thead>
@@ -30,10 +32,12 @@
               <td><%= document.description %></td>
               <td><%= document.content %></td>
               <td><%= User.find(document.user_id).name %></td>
-              <td><%= he_privacy[document.privacy.to_sym] if document.privacy.present? %></td>
               <td><%= document.date.strftime("%Y") if document.date %></td>
-              <% if params[:approving] && current_user.admin? %>
-                <td><%= link_to he_status[document.status.to_sym], toggle_status_path(clicked_document: document.id) %></td>
+              <% if user_signed_in? && current_user.admin? %>
+                <td><%= he_privacy[document.privacy.to_sym] if document.privacy.present? %></td>
+                <% if params[:approving] %>
+                  <td><%= link_to he_status[document.status.to_sym], toggle_status_path(clicked_document: document.id) %></td>
+                <% end %>
               <% end %>
           </tr>
         <% end %>
@@ -44,8 +48,10 @@
                 <td>לפגישות אין תיאור</td>
                 <td><%= meeting.content %></td>
                 <td><%= meeting.team.name %> </td>
-                <td><%= he_privacy[meeting.privacy.to_sym] %></td>
                 <td><%= meeting.created_at.strftime("%Y") %></td>
+                <% if user_signed_in? && current_user.admin? %>
+                  <td><%= he_privacy[meeting.privacy.to_sym] %></td>
+                <% end %>
             </tr>
           <% end %>
         <% end %>
