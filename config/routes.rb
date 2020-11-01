@@ -13,4 +13,7 @@ Rails.application.routes.draw do
   get 'send_meeting', to: 'meetings#send_meeting'
   get 'join_team', to: 'teams#join_team'
   get 'profile', to: 'home#profile'
+  get 'intro', to: 'home#intro'
+  get 'intro2', to: 'home#intro2'
+  get 'intro3', to: 'home#intro3'
 end
