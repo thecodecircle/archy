@@ -25,3 +25,4 @@ require( 'datatables.net-responsive-dt' );
 import "stylesheets/application"
 require("trix")
 require("@rails/actiontext")
+require("select2")

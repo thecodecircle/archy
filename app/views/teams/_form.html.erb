@@ -27,10 +27,16 @@
 
   <div class="field">
     <%= form.label :users, "משתמשים משויכים לצוות:", class: "block" %>
-    <%= form.collection_select :user_ids, User.all, :id, :name, {prompt: 'בחירת חברי הצוות'}, {multiple: true} %>
+    <%= form.collection_select :user_ids, User.all, :id, :name, {prompt: 'בחירת חברי הצוות'}, {multiple: true, class: "select2", style: "width: 75%;"} %>
   </div>
 
   <div class="actions">
     <%= form.submit "שליחה", class: "p-2 rounded" %>
   </div>
 <% end %>
+
+<script>
+  $(document).ready(function() {
+    $('.select2').select2();
+  });
+</script>
