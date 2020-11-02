@@ -32,13 +32,10 @@
   </div>
 
   <div class="field">
-    <%= form.label :tag_list, "תגיות:" %>
-    <%=
-      form.text_field :tag_list,
-      value: @document.send(:tag_list).to_s,
-      placeholder: 'הגשמה, חיי גרעין'
-    %>
+    <%= form.label :tag_list, "תגיות" %>
+    <%= form.collection_select :tag_list, ActsAsTaggableOn::Tag.all, :name, :name, {prompt: 'בחירת חברי הצוות'}, {multiple: true, class: "select2_tags", style: "width: 100%;"} %>
   </div>
+
 
   <div class="field">
     <%= form.label :privacy, "הגדרת פרטיות:" %>
@@ -66,3 +63,12 @@
     <%= form.submit "שליחה", class: "p-2 rounded" %>
   </div>
 <% end %>
+
+<script>
+  $(document).ready(function() {
+    $('.select2_tags').select2({
+      tags: true,
+      tokenSeparators: [',']
+    });
+  });
+</script>

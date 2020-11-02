@@ -81,7 +81,7 @@ class MeetingsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def meeting_params
-      params.require(:meeting).permit(:team_id, :content, :privacy, :subject, :tag_list, attachments: [], user_ids: [])
+      params.require(:meeting).permit(:team_id, :content, :privacy, :subject, tag_list: [], attachments: [], user_ids: [])
     end
 
     def restrict_meeting

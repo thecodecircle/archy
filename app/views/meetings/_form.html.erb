@@ -23,16 +23,12 @@
 
   <div class="field">
     <%= form.label :tag_list, "תגיות" %>
-    <%=
-      form.text_field :tag_list,
-      value: @meeting.send(:tag_list).to_s,
-      placeholder: 'הגשמה, חיי גרעין'
-    %>
+    <%= form.collection_select :tag_list, ActsAsTaggableOn::Tag.all, :name, :name, {prompt: 'בחירת חברי הצוות'}, {multiple: true, class: "select2_tags", style: "width: 100%;"} %>
   </div>
 
   <div class="field">
-    <%= form.label :users, "חברי וחברות צוות שנכחו בפגישה" %>
-    <%= form.collection_select :user_ids, @team.users, :id, :name, {prompt: 'בחירת חברי צוות נוכחים'}, {multiple: true} %>
+    <%= form.label :user_ids, "חברי וחברות צוות שנכחו בפגישה" %>
+    <%= form.collection_select :user_ids, @team.users, :id, :name, {prompt: 'בחירת חברי הצוות'}, {multiple: true, class: "select2", style: "width: 100%;"} %>
   </div>
 
   <div class="field">
@@ -61,3 +57,13 @@
     <%= form.submit "שליחה", class: "p-2 rounded" %>
   </div>
 <% end %>
+
+<script>
+  $(document).ready(function() {
+    $('.select2').select2();
+    $('.select2_tags').select2({
+      tags: true,
+      tokenSeparators: [',']
+    });
+  });
+</script>
