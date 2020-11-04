@@ -85,7 +85,7 @@ class MeetingsController < ApplicationController
     end
 
     def restrict_meeting
-      redirect_to root_path unless current_user.admin? || @meeting.commons? || (@meeting.team? && @meeting.team.users.ids(include?(current_user.id)))
+      redirect_to root_path unless current_user.admin? || @meeting.commons? || (@meeting.team? && @meeting.team.users.ids.include?(current_user.id))
     end
 
 end

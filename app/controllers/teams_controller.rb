@@ -81,6 +81,6 @@ class TeamsController < ApplicationController
     end
 
     def restrict_team
-      redirect_to root_path unless current_user.admin? || @team.commons? || @team.users.ids(include?(current_user.id))
+      redirect_to root_path unless current_user.admin? || @team.users.ids.include?(current_user.id)
     end
 end
