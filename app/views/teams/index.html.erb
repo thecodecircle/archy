@@ -12,7 +12,6 @@
   				<th data-priority="1">שם הצוות</th>
           <% if current_user.admin? %>
     				<th data-priority="3"></th>
-    				<th data-priority="4"></th>
           <% end %>
   			</tr>
   		</thead>
@@ -21,8 +20,8 @@
           <tr>
               <td><%= link_to team.name, team %></td>
               <% if current_user.admin? %>
-                <td><%= link_to 'עריכה', edit_team_path(team) %></td>
-                <td><%= link_to 'מחיקה', team, method: :delete, data: { confirm: 'בטוח\ה?' } %></td>
+                <td><%= link_to 'עריכה', edit_team_path(team) %> | 
+                <%= link_to 'מחיקה', team, method: :delete, data: { confirm: 'בטוח\ה?' } %></td>
               <% end %>
           </tr>
         <% end %>

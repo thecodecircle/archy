@@ -17,6 +17,8 @@
     				<th data-priority="5">פרטיות</th>
     				<th data-priority="6">שנה</th>
     				<th data-priority="7">מאושר</th>
+            <th data-priority="8"></th>
+            <!-- <th data-priority="9"></th> -->
     			</tr>
     		</thead>
     		<tbody>
@@ -28,6 +30,8 @@
                 <td><%= he_privacy[document.privacy.to_sym] if document.privacy.present? %></td>
                 <td><%= document.date.strftime("%Y") if document.date %></td>
                 <td><%= he_status[document.status.to_sym] %></td>
+                <td><%= link_to 'עריכה', edit_document_path(document) %> | 
+                <%= link_to 'מחיקה', document, method: :delete, data: { confirm: 'בטוח\ה?' } %></td>
             </tr>
           <% end %>
           <% current_user.teams.each do |team| %>
@@ -39,6 +43,8 @@
                   <td><%= he_privacy[meeting.privacy.to_sym] %></td>
                   <td><%= meeting.created_at.strftime("%Y") %></td>
                   <td>פגישות לא צריכות אישור</td>
+                  <td><%= link_to 'עריכה', edit_team_meeting_path(team, meeting) %> |
+                  <%= link_to 'מחיקה', meeting, method: :delete, data: { confirm: 'בטוח\ה?' } %></td>
               </tr>
             <% end %>
           <% end %>
