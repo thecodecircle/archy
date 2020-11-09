@@ -27,7 +27,7 @@
                 <td><%= User.find(document.user_id).name %></td>
                 <td><%= he_privacy[document.privacy.to_sym] if document.privacy.present? %></td>
                 <td><%= document.date.strftime("%Y") if document.date %></td>
-                <td><%= link_to he_status[document.status.to_sym], toggle_status_path(clicked_document: document.id) %></td>
+                <td><%= he_status[document.status.to_sym] %></td>
             </tr>
           <% end %>
           <% current_user.teams.each do |team| %>

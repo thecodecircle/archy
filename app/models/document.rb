@@ -7,9 +7,6 @@ class Document < ApplicationRecord
   enum status: [:not_approved, :approved]
   acts_as_taggable_on :tags
 
-  # include PgSearch::Model
-  # multisearchable against: :title
-
   validates :title,  presence: true
   validates :privacy, inclusion: { in: Document.privacies.keys }
 end
