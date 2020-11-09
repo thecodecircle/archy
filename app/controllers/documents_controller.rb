@@ -85,6 +85,6 @@ class DocumentsController < ApplicationController
     end
 
     def restrict_document
-      redirect_to root_path unless current_user.admin? || @document.commons? || (@document.internal? && current_user.internal?) || (@document.personal? && @document.user_id == current_user.id)
+      redirect_to root_path unless current_user.admin? || @document.commons? || (@document.internal? && current_user.internal?) || ((@document.personal? || @document.internal?) && @document.user_id == current_user.id)
     end
 end
