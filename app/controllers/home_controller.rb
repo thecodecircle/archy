@@ -2,7 +2,7 @@ class HomeController < ApplicationController
   skip_before_action :authenticate_user!, only: [:index, :search, :intro, :intro2, :intro3]
 
   def index
-    redirect_to intro_path unless user_signed_in? || cookies[:intro] == "true"
+    redirect_to intro_path unless cookies[:intro] == "true"
   end
 
   def search
