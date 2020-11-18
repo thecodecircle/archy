@@ -56,7 +56,11 @@
         <li class="mt-4"><p><%= attachment %></p></li>
       <% else %>
         <%= link_to url_for(attachment) do %>
-          <li class="mt-4"><%= image_tag attachment.preview(resize_to_limit: [1000, 1000]) %></li>
+          <% if attachment.previewable? %>
+            <li class="mt-4"><%= image_tag attachment.preview(resize_to_limit: [1000, 1000]) %></li>
+          <% else %>
+            <%= attachment.filename %> <br>
+          <% end %>
         <% end %>
       <% end %>
     <% end %>
@@ -65,7 +69,7 @@
 
 <br>
 <% if @meeting.team.users.ids.include?(current_user.id) || current_user.admin? %>
-  <%= link_to 'עריכת הפגישה', edit_team_meeting_path(@meeting), class: "bg-white hover:bg-gray-400 text-blue-600 font-bold py-2 px-4 rounded-full" %>
+  <%= link_to 'עריכת הפגישה', edit_team_meeting_path(@meeting.team, @meeting), class: "bg-white hover:bg-gray-400 text-blue-600 font-bold py-2 px-4 rounded-full" %>
   <%= link_to 'מחיקת הפגישה', team_meeting_path(@meeting), method: :delete, data: { confirm: 'בטוח\ה?' }, class: "bg-white hover:bg-gray-400 text-blue-600 font-bold py-2 px-4 rounded-full" %>
   <%= link_to 'שליחת הפגישה במייל לחברי הצוות', send_meeting_path(meeting: @meeting.id, user: current_user.id), class: "bg-white hover:bg-gray-400 text-blue-600 font-bold py-2 px-4 rounded-full" %>
 <% end %>

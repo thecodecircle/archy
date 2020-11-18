@@ -51,8 +51,12 @@
                 <td><%= meeting.content %></td>
                 <td><%= meeting.team.name %> </td>
                 <td><%= meeting.created_at.strftime("%Y") %></td>
+                <td><%= meeting.tag_list %></td>
                 <% if user_signed_in? && current_user.admin? %>
                   <td><%= he_privacy[meeting.privacy.to_sym] %></td>
+                  <% if params[:approving] %>
+                    <td></td>
+                  <% end %>
                 <% end %>
             </tr>
           <% end %>

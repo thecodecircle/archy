@@ -23,7 +23,7 @@
 
   <div class="field">
     <%= form.label :users, "משתמשים משויכים לצוות:", class: "block" %>
-    <%= form.collection_select :user_ids, User.all, :id, :name, {prompt: 'בחירת חברי הצוות'}, {multiple: true, class: "select2", style: "width: 100%;"} %>
+    <%= form.collection_select :user_ids, User.where.not(id: current_user.id), :id, :name, {prompt: 'בחירת חברי הצוות'}, {multiple: true, class: "select2", style: "width: 100%;"} %>
   </div>
 
   <div class="actions">
