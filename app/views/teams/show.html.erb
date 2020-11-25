@@ -1,5 +1,8 @@
 <p id="notice"><%= notice %></p>
 
+<%= link_to "<i class='material-icons'>add</i>פגישה חדשה".html_safe, new_team_meeting_path(@team), class: "bg-white hover:bg-gray-400 text-blue-600 font-bold py-2 px-4 rounded-full" %>
+<a href="whatsapp://send?text=<%= request.base_url %>/join_team?t=<%= @team.id %>" class="bg-white hover:bg-gray-400 text-blue-600 font-bold py-2 px-4 rounded-full"><i class='material-icons'>share</i></a>
+
 <p>
   <strong>שם הצוות:</strong>
   <%= @team.name %>
@@ -19,7 +22,9 @@
   <%= @team.tag_list %>
 </p>
 
-<h1>פגישות של <%= @team.name %></h1>
+<h1>פגישות של <%= @team.name %>
+<%= link_to "<i class='material-icons'>edit</i>".html_safe, edit_team_path(@team) %>
+<%= link_to "<i class='material-icons'>delete</i>".html_safe, team_path(@team), method: :delete, data: { confirm: "בטוח\ה?" } %></h1>
 
 <!--Container-->
 <div class="container w-full md:w-4/5 xl:w-3/5  mx-auto px-2 mt-20 text-gray-900">
@@ -34,7 +39,6 @@
   				<th data-priority="4">פרטיות</th>
   				<th data-priority="5">מספר קבצים מצורפים</th>
   				<th data-priority="6"></th>
-  				<th data-priority="7"></th>
   			</tr>
   		</thead>
   		<tbody>
@@ -45,8 +49,9 @@
               <td><%= meeting.content %></td>
               <td><%= he_privacy[meeting.privacy.to_sym] %></td>
               <td><%= meeting.attachments.count %></td>
-              <td><%= link_to 'עריכה', edit_team_meeting_path(@team, meeting) %></td>
-              <td><%= link_to 'מחיקה', team_meeting_path(@team, meeting), method: :delete, data: { confirm: 'בטוח\ה?' } %></td>
+              <td><%= link_to "<i class='material-icons'>edit</i>".html_safe, edit_team_meeting_path(@team, meeting) %>
+                  <%= link_to "<i class='material-icons'>delete</i>".html_safe, team_meeting_path(@team, meeting), method: :delete, data: { confirm: 'בטוח\ה?' } %>
+              </td>
           </tr>
         <% end %>
   		</tbody>
@@ -55,8 +60,3 @@
   <!--/Card-->
 </div>
 <!--/container-->
-
-<%= link_to "מחיקת הצוות", team_path(@team), method: :delete, data: { confirm: "בטוח\ה?" } %> |
-<%= link_to 'עריכת הצוות', edit_team_path(@team) %> |
-<%= link_to 'פגישה חדשה', new_team_meeting_path(@team) %> |
-<a href="whatsapp://send?text=<%= request.base_url %>/join_team?t=<%= @team.id %>">שליחת קישור הצטרפות לצוות בוואטסאפ</a>

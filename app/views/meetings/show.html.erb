@@ -1,3 +1,10 @@
+<div class="mb-2">
+  <% if @meeting.team.users.ids.include?(current_user.id) || current_user.admin? %>
+    <%= link_to "<i class='material-icons'>edit</i>".html_safe, edit_team_meeting_path(@meeting.team, @meeting), class: "bg-white hover:bg-gray-400 text-blue-600 font-bold py-2 px-4 rounded-full" %>
+    <%= link_to "<i class='material-icons'>delete</i>".html_safe, team_meeting_path(@meeting), method: :delete, data: { confirm: 'בטוח\ה?' }, class: "bg-white hover:bg-gray-400 text-blue-600 font-bold py-2 px-4 rounded-full" %>
+    <%= link_to "<i class='material-icons'>mail</i>".html_safe, send_meeting_path(meeting: @meeting.id, user: current_user.id), class: "bg-white hover:bg-gray-400 text-blue-600 font-bold py-2 px-4 rounded-full" %>
+  <% end %>
+</div>
 <% if params[:sent] %>
 <strong>מייל נשלח בהצלחה</strong>
 <% end %>
@@ -66,12 +73,3 @@
     <% end %>
 </ul>
 </p>
-
-<br>
-<% if @meeting.team.users.ids.include?(current_user.id) || current_user.admin? %>
-  <%= link_to 'עריכת הפגישה', edit_team_meeting_path(@meeting.team, @meeting), class: "bg-white hover:bg-gray-400 text-blue-600 font-bold py-2 px-4 rounded-full" %>
-  <%= link_to 'מחיקת הפגישה', team_meeting_path(@meeting), method: :delete, data: { confirm: 'בטוח\ה?' }, class: "bg-white hover:bg-gray-400 text-blue-600 font-bold py-2 px-4 rounded-full" %>
-  <%= link_to 'שליחת הפגישה במייל לחברי הצוות', send_meeting_path(meeting: @meeting.id, user: current_user.id), class: "bg-white hover:bg-gray-400 text-blue-600 font-bold py-2 px-4 rounded-full" %>
-<% end %>
-<br>
-<%# link_to 'Back', meetings_path %>
