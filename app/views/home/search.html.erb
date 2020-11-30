@@ -1,73 +1,88 @@
 <% if params[:approving] != "true" %>
-  <h1>חיפוש חומרים</h1>
+<h1>חיפוש חומרים</h1>
 <% else %>
-  <h1>ממשק אישור מסמכים</h1>
+<h1>ממשק אישור מסמכים</h1>
 <% end %>
 
 <%= link_to "ממשק אישור מסמכים", search_path(approving: "true") if user_signed_in? && current_user.admin? && params[:approving] != "true" %>
 <!--Container-->
 <div class="container w-full md:w-4/5  mx-auto px-2 mt-20 text-gray-900">
-<!--Card-->
-  <div id='recipients' class="p-8 mt-6 lg:mt-0 rounded shadow bg-white">
-  	<table id="table" class="stripe hover">
-  		<thead>
-  			<tr>
-  				<th data-priority="1">כותרת</th>
-  				<th data-priority="2">תיאור</th>
-  				<th data-priority="3">תוכן</th>
-          <th data-priority="4">משתמש/צוות</th>
-  				<th data-priority="6">שנה</th>
-          <th data-priority="7">תגיות</th>
-          <% if user_signed_in? && current_user.admin? %>
-            <th data-priority="5">פרטיות</th>
-            <% if params[:approving] %>
-      				<th data-priority="8">מאושר</th>
-            <% end %>
-          <% end %>
-  			</tr>
-  		</thead>
-  		<tbody>
-        <% @documents.each do |document| %>
-          <tr>
-              <td><%= link_to document.title, document %></td>
-              <td><%= document.description %></td>
-              <td><%= document.content %></td>
-              <td><%= User.find(document.user_id).name %></td>
-              <td><%= document.date.strftime("%Y") if document.date %></td>
-              <td><%= document.tag_list %></td>
-              <% if user_signed_in? && current_user.admin? %>
-                <td><%= he_privacy[document.privacy.to_sym] if document.privacy.present? %></td>
-                <% if params[:approving] %>
-                  <td><%= link_to he_status[document.status.to_sym], toggle_status_path(clicked_document: document.id) %></td>
+    <!--Card-->
+    <div id='recipients' class="p-8 mt-6 lg:mt-0 rounded shadow bg-white">
+        <table id="search-table" class="stripe hover">
+            <thead>
+                <tr>
+                    <th data-priority="1">כותרת</th>
+                    <th data-priority="2">תיאור</th>
+                    <th data-priority="3">תוכן</th>
+                    <th data-priority="4">משתמש/צוות</th>
+                    <th data-priority="6">שנה</th>
+                    <th data-priority="7">תגיות</th>
+                    <% if user_signed_in? && current_user.admin? %>
+                    <th data-priority="5">פרטיות</th>
+                    <% if params[:approving] %>
+                    <th data-priority="8">מאושר</th>
+                    <% end %>
+                    <% end %>
+                </tr>
+            </thead>
+            <tbody>
+                <% @documents.each do |document| %>
+                <tr>
+                    <td><%= link_to document.title, document %></td>
+                    <td><%= document.description %></td>
+                    <td><%= document.content %></td>
+                    <td><%= User.find(document.user_id).name %></td>
+                    <td><%= document.date.strftime("%Y") if document.date %></td>
+                    <td><%= document.tag_list %></td>
+                    <% if user_signed_in? && current_user.admin? %>
+                    <td><%= he_privacy[document.privacy.to_sym] if document.privacy.present? %></td>
+                    <% if params[:approving] %>
+                    <td><%= link_to he_status[document.status.to_sym], toggle_status_path(clicked_document: document.id) %></td>
+                    <% end %>
+                    <% end %>
+                </tr>
                 <% end %>
-              <% end %>
-          </tr>
-        <% end %>
-        <% unless params[:approving] %>
-          <% @meetings.each do |meeting| %>
-            <tr>
-                <td><%= link_to meeting.subject, team_meeting_path(meeting, meeting.team) %></td>
-                <td>לפגישות אין תיאור</td>
-                <td><%= meeting.content %></td>
-                <td><%= meeting.team.name %> </td>
-                <td><%= meeting.created_at.strftime("%Y") %></td>
-                <td><%= meeting.tag_list %></td>
-                <% if user_signed_in? && current_user.admin? %>
-                  <td><%= he_privacy[meeting.privacy.to_sym] %></td>
-                  <% if params[:approving] %>
+                <% unless params[:approving] %>
+                <% @meetings.each do |meeting| %>
+                <tr>
+                    <td><%= link_to meeting.subject, team_meeting_path(meeting, meeting.team) %></td>
+                    <td>לפגישות אין תיאור</td>
+                    <td><%= meeting.content %></td>
+                    <td><%= meeting.team.name %> </td>
+                    <td><%= meeting.created_at.strftime("%Y") %></td>
+                    <td><%= meeting.tag_list %></td>
+                    <% if user_signed_in? && current_user.admin? %>
+                    <td><%= he_privacy[meeting.privacy.to_sym] %></td>
+                    <% if params[:approving] %>
                     <td></td>
-                  <% end %>
+                    <% end %>
+                    <% end %>
+                </tr>
                 <% end %>
-            </tr>
-          <% end %>
-        <% end %>
-  		</tbody>
-  	</table>
-  </div>
-  <!--/Card-->
+                <% end %>
+            </tbody>
+        </table>
+    </div>
+    <!--/Card-->
 </div>
 <!--/container-->
 
 <div class="text-sm">
-  אם מסמך שהעליתן לא כאן, כנראה הוא מחכה לאישור של המנהלים. אפשר לראות את המצב בפרופיל שלכן
+    אם מסמך שהעליתן לא כאן, כנראה הוא מחכה לאישור של המנהלים. אפשר לראות את המצב בפרופיל שלכן
 </div>
+
+<script>
+    $(document).ready(function() {
+        $('#search-table').DataTable({
+            "columnDefs": [{
+                "targets": [2],
+                "visible": false,
+            }],
+            responsive: true,
+            language: {
+                "url": "//cdn.datatables.net/plug-ins/1.10.21/i18n/Hebrew.json"
+            }
+        });
+    });
+</script>

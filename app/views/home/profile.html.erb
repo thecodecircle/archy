@@ -44,7 +44,7 @@
                   <td><%= meeting.created_at.strftime("%Y") %></td>
                   <td>פגישות לא צריכות אישור</td>
                   <td><%= link_to 'עריכה', edit_team_meeting_path(team, meeting) %> |
-                  <%= link_to 'מחיקה', meeting, method: :delete, data: { confirm: 'בטוח\ה?' } %></td>
+                  <%= link_to 'מחיקה', team_meeting_path(team, meeting), method: :delete, data: { confirm: 'בטוח\ה?' } %></td>
               </tr>
             <% end %>
           <% end %>

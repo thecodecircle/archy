@@ -1,9 +1,9 @@
 <div class="mb-2">
-  <% if @meeting.team.users.ids.include?(current_user.id) || current_user.admin? %>
+    <% if @meeting.team.users.ids.include?(current_user.id) || current_user.admin? %>
     <%= link_to "<i class='material-icons'>edit</i>".html_safe, edit_team_meeting_path(@meeting.team, @meeting), class: "bg-white hover:bg-gray-400 text-blue-600 font-bold py-2 px-4 rounded-full" %>
-    <%= link_to "<i class='material-icons'>delete</i>".html_safe, team_meeting_path(@meeting), method: :delete, data: { confirm: 'בטוח\ה?' }, class: "bg-white hover:bg-gray-400 text-blue-600 font-bold py-2 px-4 rounded-full" %>
+    <%= link_to "<i class='material-icons'>delete</i>".html_safe, team_meeting_path(@meeting.team, @meeting), method: :delete, data: { confirm: 'בטוח\ה?' }, class: "bg-white hover:bg-gray-400 text-blue-600 font-bold py-2 px-4 rounded-full" %>
     <%= link_to "<i class='material-icons'>mail</i>".html_safe, send_meeting_path(meeting: @meeting.id, user: current_user.id), class: "bg-white hover:bg-gray-400 text-blue-600 font-bold py-2 px-4 rounded-full" %>
-  <% end %>
+    <% end %>
 </div>
 <% if params[:sent] %>
 <strong>מייל נשלח בהצלחה</strong>
@@ -11,65 +11,67 @@
 <p id="notice"><%= notice %></p>
 
 <p>
-  <strong>נושא הפגישה:</strong>
-  <%= @meeting.subject %>
+    <strong>נושא הפגישה:</strong>
+    <%= @meeting.subject %>
 </p>
 
 <p>
-  <strong>צוות:</strong>
-  <%= Team.find(@meeting.team_id).name %>
+    <strong>צוות:</strong>
+    <%= Team.find(@meeting.team_id).name %>
 </p>
 
 <p>
-  <strong>תוכן הפגישה:</strong>
-  <%= @meeting.content %>
+    <strong>תוכן הפגישה:</strong>
+    <%= @meeting.content %>
 </p>
 
 <p>
-  <strong>תגיות:</strong>
-  <%= @meeting.tag_list %>
+    <strong>תגיות:</strong>
+    <%= @meeting.tag_list %>
 </p>
 
 <p>
-  <strong>פרטיות:</strong>
-  <%= he_privacy[@meeting.privacy.to_sym] %>
+    <strong>פרטיות:</strong>
+    <%= he_privacy[@meeting.privacy.to_sym] %>
 </p>
 
 <p>
-  <strong>כמות קבצים מצורפים:</strong>
-  <%= @meeting.attachments.count %>
+    <strong>כמות קבצים מצורפים:</strong>
+    <%= @meeting.attachments.count %>
 </p>
 
 <p>
-  <strong>חברי צוות שנכחו בפגישה:</strong>
-  <ul>
+    <strong>חברי צוות שנכחו בפגישה:</strong>
+<ul>
     <% @meeting.users.each do |user| %>
-      <li><%= user.name %></li>
+    <li><%= user.name %></li>
     <% end %>
-  </ul>
+</ul>
 </p>
 
 <p>
-  <strong>קבצים מצורפים:</strong>
-  <ul>
+    <strong>קבצים מצורפים:</strong>
+<ul>
     <% @meeting.attachments.each do |attachment| %>
-      <% if attachment.image? %>
-        <li class="mt-4"><%= image_tag attachment %></li>
-      <% elsif attachment.video? %>
-        <li class="mt-4"><%= video_tag url_for(attachment), controls: true %></li>
-      <% elsif attachment.audio? %>
-        <li class="mt-4"><%= audio_tag attachment %></li>
-      <% elsif attachment.text? %>
-        <li class="mt-4"><p><%= attachment %></p></li>
-      <% else %>
-        <%= link_to url_for(attachment) do %>
-          <% if attachment.previewable? %>
-            <li class="mt-4"><%= image_tag attachment.preview(resize_to_limit: [1000, 1000]) %></li>
-          <% else %>
-            <%= attachment.filename %> <br>
-          <% end %>
-        <% end %>
-      <% end %>
+    <% if attachment.image? %>
+    <li class="mt-4"><%= image_tag attachment %></li>
+    <% elsif attachment.video? %>
+    <li class="mt-4"><%= video_tag url_for(attachment), controls: true %></li>
+    <% elsif attachment.audio? %>
+    <li class="mt-4"><%= audio_tag attachment %></li>
+    <% elsif attachment.text? %>
+    <li class="mt-4">
+        <p><%= attachment %></p>
+    </li>
+    <% else %>
+    <%= link_to url_for(attachment) do %>
+    <% if attachment.previewable? %>
+    <li class="mt-4"><%= image_tag attachment.preview(resize_to_limit: [1000, 1000]) %></li>
+    <% else %>
+    <%= attachment.filename %> <br>
+    <% end %>
+    <% end %>
+    <% end %>
     <% end %>
 </ul>
 </p>
