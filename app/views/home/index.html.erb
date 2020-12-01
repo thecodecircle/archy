@@ -1,23 +1,44 @@
-<div class="flex flex-col items-center">
-  <div class="flex flex-col w-full md:w-3/5 lg:w-2/5 items-center">
-    <%= image_tag "brainstorming.svg" %>
-    <%= link_to "הכנסת חומר חדש לארכיון", new_document_path, class: "w-full text-center bg-white hover:bg-white text-gray-800 font-bold py-2 px-4 rounded-full mt-4 font-bold shadow opacity-75" %>
-    <div class="flex justify-between my-4 w-full">
-      <%= link_to "מרחב עבודה", teams_path, class: "w-full text-center bg-transparent hover:bg-white text-white hover:text-gray-800 font-bold py-2 px-4 border border-white hover:border-transparent rounded-full font-bold shadow opacity-75 ml-8" %>
-      <%= link_to "חיפוש חומרים", search_path, class: "w-full text-center bg-transparent hover:bg-white text-white hover:text-gray-800 font-bold py-2 px-4 border border-white hover:border-transparent rounded-full font-bold shadow opacity-75" %>
+<div class="flex flex-col items-center hero ">
+  <div class="w-full flex flex-col items-center lg:flex-row-reverse justify-around">
+    <div class="">
+      <%= image_tag "brainstorming.svg" %>
+    </div>
+    <div class="flex flex-col w-full md:w-3/5 lg:w-2/5 items-center">
+      <div class="hidden lg:block text-blue-1000">
+        <p class="w-full pre-line">
+          <strong class="text-xl">
+            ארכישמוץ (שם זמני) הוא פרויקט לתיעוד תנועת השומר הצעיר.
+          </strong>
+          <i>
+            "לא לחינם נאמר על השומר הצעיר שזו תנועה ש'כתבה את עצמה לדעת' ו'חקרה את עצמה לדעת'."
+          (יזהר בן-נחום)
+        </i>
+        </p>
+      </div>
+      <%= link_to "הכנסת חומר חדש לארכיון", new_document_path, class: "bg-blue-600 w-full text-center hover:bg-blue-500 text-white font-bold py-2 px-4 rounded-full mt-4 font-bold shadow" %>
+      <div class="flex justify-between my-4 w-full">
+        <%= link_to "מרחב עבודה", teams_path, class: "w-full text-center bg-transparent hover:bg-blue-600 text-blue-600 hover:text-white font-bold py-2 px-4 border-2 border-blue-600 hover:border-transparent rounded-full font-bold shadow ml-8" %>
+        <%= link_to "חיפוש חומרים", search_path, class: "w-full text-center bg-transparent hover:bg-blue-600 text-blue-600 hover:text-white font-bold py-2 px-4 border-2 border-blue-600 hover:border-transparent rounded-full font-bold shadow" %>
+      </div>
     </div>
   </div>
-  <p class="font-bold mb-2">ארכישמוץ (שם זמני) הוא פרויקט לתיעוד תנועת השומר הצעיר. </p>
-  <p class="w-full md:w-4/5">
-    "לא לחינם נאמר על השומר הצעיר שזו תנועה ש'כתבה את עצמה לדעת' ו'חקרה את עצמה לדעת'.
-       התנועה הקטנה יחסית יצרה שפע של מקורות כתובים.
-        חברי התנועה ובוגריה גילו תודעה היסטורית מפותחת והרבו לכתוב ספרי זיכרונות, קובצי מקורות, ביוגרפיות וכתבים שונים" (יזהר בן-נחום).
-מאז הקמתה, תנועת השומר הצעיר יצרה שפע מקורות, מתוך התודעה ההיסטורית עליה כותב בן-נחום.
- מאז הקמת תנועת הבוגרים, המשכנו ביצירת השפע הזה, המשכנו לכתוב, ליצור ולתעד את החיים והעשייה שלנו, מתוך תחושה שאנחנו חלק מרצף ארוך של היסטוריה שומרית ארוכה.
+  <a href="#info" class=" text-blue-1000">
+    <i class='material-icons icon-big'>keyboard_arrow_down</i>
+  </a>
+</div>
+<div class="flex justify-center flex-col w-full items-center pre-line" id="info" >
+  <h2 class="font-bold mb-2 text-blue-1000 text-center"  >ארכישמוץ (שם זמני) הוא פרויקט לתיעוד תנועת השומר הצעיר. </h2>
+  <div class=" text-blue-1000 lg:w-4/5 columns-3" ><p class="w-full "><strong>"לא לחינם נאמר על השומר הצעיר שזו תנועה ש'כתבה את עצמה לדעת' ו'חקרה את עצמה לדעת'. התנועה הקטנה יחסית יצרה שפע של מקורות כתובים. חברי התנועה ובוגריה גילו תודעה היסטורית מפותחת והרבו לכתוב ספרי זיכרונות, קובצי מקורות, ביוגרפיות וכתבים שונים" (יזהר בן-נחום).</strong>
 
-לרגל עשרים שנה להקמת תנועת הבוגרים, הגיע הזמן לעשות סדר בכל הבלגן כדי שנוכל לחלוק את מה שכתבנו ויצרנו כתנועה בעשרים השנים האחרונות,
- כדי שנוכל להבין את עצמנו ואת התנועה טוב יותר, וכדי שנוכל להתמודד עם משבר ההגשמה טוב יותר ואולי אפילו להדריך אותו אחרת.
-<span class="font-bold">מתוך המאגר שיווצר נוכל לקבל תשובות על שאלות שאנחנו שואלים את עצמנו כתנועה, וחשוב מזה, להבין על שאלות חדשות שלא חשבנו עליהן.
-זה לא שורשי יניקה. זה תיעוד של התנועה שלנו - מהפגישות היומיומיות ועד ללבטים הכי קשים על הבחירה לחיות חיי שיתוף חלוציים בשנת 2020.</span>
-  </p>
+    מאז הקמתה, תנועת השומר הצעיר יצרה שפע מקורות, מתוך התודעה ההיסטורית עליה כותב בן-נחום.
+    מאז הקמת תנועת הבוגרים, המשכנו ביצירת השפע הזה, המשכנו לכתוב, ליצור ולתעד את החיים והעשייה שלנו, מתוך תחושה שאנחנו חלק מרצף ארוך של היסטוריה שומרית ארוכה.
+
+    לרגל עשרים שנה להקמת תנועת הבוגרים, הגיע הזמן לעשות סדר בכל הבלגן כדי שנוכל לחלוק את מה שכתבנו ויצרנו כתנועה בעשרים השנים האחרונות,
+    כדי שנוכל להבין את עצמנו ואת התנועה טוב יותר, וכדי שנוכל להתמודד עם משבר ההגשמה טוב יותר ואולי אפילו להדריך אותו אחרת.
+
+    <span class="font-bold">מתוך המאגר שיווצר נוכל לקבל תשובות על שאלות שאנחנו שואלים את עצמנו כתנועה, וחשוב מזה, להבין על שאלות חדשות שלא חשבנו עליהן.
+      זה לא שורשי יניקה. זה תיעוד של התנועה שלנו - מהפגישות היומיומיות ועד ללבטים הכי קשים על הבחירה לחיות חיי שיתוף חלוציים בשנת 2020.</span>
+    </p>
+  </div>
+
 </div>
