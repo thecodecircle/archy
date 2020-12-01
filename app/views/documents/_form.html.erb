@@ -27,7 +27,7 @@
   </div>
 
   <div class="field">
-    <%= form.label :date, "תאריך יצירת המסמך (אפשר להשאיר ריק אם זה היום)" %>
+    <%= form.label :date, "תאריך יצירת המסמך" %>
     <%= form.date_field :date, value: Date.today %>
   </div>
 
@@ -60,7 +60,7 @@
     </div>
   <% end %>
   <div class="actions">
-    <%= form.submit "שליחה", class: "p-2 rounded" %>
+    <%= form.submit "שמירה", class: "p-2 rounded" %>
   </div>
 <% end %>
 
@@ -95,6 +95,21 @@
           url: "/documents/" + id + "",
           data: $("form").serialize(),
           success: function(data) {
+            console.log(data);
+            event.preventDefault()
+            after_save()
+          }
+        })
+      }
+      else if (<%= action_name == "edit" %>) {
+        console.log(<%= params[:id] %>);
+        id = <%= params[:id] %>
+        $.ajax({
+          type: "PUT",
+          url: "/documents/" + id + "",
+          data: $("form").serialize(),
+          success: function(data) {
+            console.log(data);
             event.preventDefault()
             after_save()
           }
@@ -112,8 +127,8 @@
             after_save()
           }
         })
-
       }
+
     }
   });
 
