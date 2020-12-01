@@ -69,6 +69,7 @@
   var id = null
   var description
   var content
+  var time_idle = 0
   $(document).ready(function() {
     $('.select2_tags').select2({
       tags: true,
@@ -86,8 +87,8 @@
   });
   $("trix-editor").on('trix-change', function(event) {
     changes++
+    time_idle = 0
     if (changes >= 10) {
-      console.log("more than ten");
       changes = 0
       if (id != null) {
         $.ajax({
@@ -102,7 +103,6 @@
         })
       }
       else if (<%= action_name == "edit" %>) {
-        console.log(<%= params[:id] %>);
         id = <%= params[:id] %>
         $.ajax({
           type: "PUT",
@@ -133,7 +133,7 @@
   });
 
   setInterval(function () {
-    if (id != null && description != $("trix-editor#document_description").val() || content != $("trix-editor#document_content").val()) {
+    if (id != null && (description != $("trix-editor#document_description").val() || content != $("trix-editor#document_content").val())) {
       $.ajax({
         type: "PUT",
         url: "/documents/" + id + "",
@@ -144,6 +144,12 @@
           after_save()
         }
       })
+    }else {
+      time_idle = time_idle + 5000
+      console.log("time_idle: " + time_idle);
+    }
+    if (time_idle >= 60000) {
+      // $("form").submit()
     }
   }, 5000);
 
