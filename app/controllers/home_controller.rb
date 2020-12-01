@@ -64,6 +64,8 @@ class HomeController < ApplicationController
 
   def profile
     @user = current_user
+    @documents = @user.documents
+    @meetings = @user.meetings
   end
 
   def intro
