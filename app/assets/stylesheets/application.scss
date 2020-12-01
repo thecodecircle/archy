@@ -236,3 +236,55 @@ trix-editor.focused{
   border-top: 1px solid rgba(0, 0, 0, 0.2) !important;
   border-radius: 0 0 10px 10px;
 }
+
+.rising-label{
+  position: relative;
+
+  input:focus ~ label,
+  input:not(:focus):valid ~ label,
+  {
+    top: 5px;
+    // bottom: 10px;
+    left: 20px;
+    font-size: 11px;
+    opacity: 1;
+    color: #062043;
+  }
+  label{
+    position: absolute;
+    pointer-events: none;
+    right: 20px;
+    top: 10px;
+    transition: 0.2s ease all;
+    color: #adbed4;
+  }
+}
+.first-details{
+  display: grid;
+  grid-template-columns: 1fr 1fr 2fr;
+  input{
+    height: 50px;
+    padding: 16px;
+  }
+
+}
+.select2-container--default .select2-selection--multiple{
+  border: none;
+  height: 50px;
+  padding:  0 16px;
+}
+.select2-container .select2-search--inline .select2-search__field {
+  margin: 0;
+}
+::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+  color: #adbed4;
+  opacity: 1; /* Firefox */
+}
+
+:-ms-input-placeholder { /* Internet Explorer 10-11 */
+  color: #adbed4;
+}
+
+::-ms-input-placeholder { /* Microsoft Edge */
+  color: #adbed4;
+}

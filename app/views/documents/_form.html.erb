@@ -11,9 +11,19 @@
     </div>
   <% end %>
 <span class="saved">המסמך נשמר!</span>
-  <div class="field flex-auto w-full">
-    <%= form.label :title, "כותרת" %>
-    <%= form.text_field :title %>
+  <div class="first-details">
+    <div class="field flex-auto w-full rising-label">
+      <%= form.text_field :title, required: true %>
+      <%= form.label :title, "כותרת" %>
+    </div>
+    <div class="field rising-label">
+      <%= form.date_field :date, value: Date.today %>
+      <%= form.label :date, "תאריך יצירה" %>
+    </div>
+    <div class="field rising-labela">
+      <%= form.collection_select :tag_list, ActsAsTaggableOn::Tag.all, :name, :name, {prompt: 'בחירת חברי הצוות'}, {multiple: true, class: "select2_tags", style: "width: 100%;", placeholder:"תגיות" }%>
+      <%# form.label :tag_list, "תגיות" %>
+    </div>
   </div>
 
   <div class="field">
@@ -26,15 +36,9 @@
     <%= form.rich_text_area :content %>
   </div>
 
-  <div class="field">
-    <%= form.label :date, "תאריך יצירת המסמך" %>
-    <%= form.date_field :date, value: Date.today %>
-  </div>
 
-  <div class="field">
-    <%= form.label :tag_list, "תגיות" %>
-    <%= form.collection_select :tag_list, ActsAsTaggableOn::Tag.all, :name, :name, {prompt: 'בחירת חברי הצוות'}, {multiple: true, class: "select2_tags", style: "width: 100%;"} %>
-  </div>
+
+
 
 
   <div class="field">
@@ -73,7 +77,8 @@
   $(document).ready(function() {
     $('.select2_tags').select2({
       tags: true,
-      tokenSeparators: [',']
+      tokenSeparators: [','],
+      placeholder: 'תגיות'
     });
   });
   $("trix-editor").css('border-top', 'none');
