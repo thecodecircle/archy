@@ -37,18 +37,18 @@
     <%= render "layouts/footer" unless current_page?(intro_path) ||  current_page?(intro2_path) ||  current_page?(intro3_path) %>
     <script>
       $(document).ready(function() {
-        // console.log($(window).height() - $("nav").height());
-        // const height = $(window).height() - $("nav").height()
-        // $("main").css('min-height', height + "px")
-        // $("footer").css('margin-top', "-" + $("footer").height() + "px")
-        console.log(
-        $('main').height(),
-        $(window).height()
-        );
-
-        if ($('main').height() < $(window).height()) {
-          $("footer").addClass('absolute bottom-0')
+        var count_fixes = 0
+        fix_footer = () => {
+          console.log("fix-footer");
+          if (count_fixes >= 10) {
+            clearInterval(footer);
+          }
+          if ($('main').height() < $(window).height()) {
+            $("footer").addClass('absolute bottom-0')
+          }
+          count_fixes++
         }
+        var footer = setInterval(fix_footer(), 100);
       var table = $('#table').DataTable( {
           responsive: true,
           language: {

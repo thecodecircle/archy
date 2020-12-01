@@ -10,9 +10,9 @@
       </ul>
     </div>
   <% end %>
-
+<span class="saved">המסמך נשמר!</span>
   <div class="field flex-auto w-full">
-    <%= form.label :title, "כותרת:" %>
+    <%= form.label :title, "כותרת" %>
     <%= form.text_field :title %>
   </div>
 
@@ -28,7 +28,7 @@
 
   <div class="field">
     <%= form.label :date, "תאריך יצירת המסמך (אפשר להשאיר ריק אם זה היום)" %>
-    <%= form.date_field :date %>
+    <%= form.date_field :date, value: Date.today %>
   </div>
 
   <div class="field">
@@ -48,27 +48,96 @@
     <%= form.file_field :attachments, multiple: true %>
     <p style="font-size: 0.8rem">ניתן להעלות קבצי PDF,  אופיס, תמונות, סרטונים והקלטות קוליות</p>
   </div>
-
-  <div class="field">
-    <%= form.label :current_attachments, "קבצים מצורפים כרגע:" %>
-    <ul>
-      <% @document.attachments.all.each do |attachment| %>
-        <li class="my-4"><%# image_tag attachment.preview(resize_to_limit: [300, 300]) %></li>
-        <li class="my-4"><%= attachment.blob.filename %></li>
-      <% end %>
-    </ul>
-  </div>
-
+  <% if @document.attachments.present? %>
+    <div class="field">
+      <%= form.label :current_attachments, "קבצים מצורפים כרגע:" %>
+      <ul>
+        <% @document.attachments.all.each do |attachment| %>
+          <li class="my-4"><%# image_tag attachment.preview(resize_to_limit: [300, 300]) %></li>
+          <li class="my-4"><%= attachment.blob.filename %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
   <div class="actions">
     <%= form.submit "שליחה", class: "p-2 rounded" %>
   </div>
 <% end %>
 
 <script>
+  var changes = 0
+  var id = null
+  var description
+  var content
   $(document).ready(function() {
     $('.select2_tags').select2({
       tags: true,
       tokenSeparators: [',']
     });
   });
+  $("trix-editor").css('border-top', 'none');
+  $("trix-editor").focus(function(event) {
+    $(event.target).closest('.field').find('.trix-button-row').css("display", "flex")
+    $(event.target).addClass('focused')
+  });
+  $("trix-editor").blur(function(event) {
+    $(event.target).closest('.field').find('.trix-button-row').css("display", "none")
+    $(event.target).removeClass('focused')
+  });
+  $("trix-editor").on('trix-change', function(event) {
+    changes++
+    if (changes >= 10) {
+      console.log("more than ten");
+      changes = 0
+      if (id != null) {
+        $.ajax({
+          type: "PUT",
+          url: "/documents/" + id + "",
+          data: $("form").serialize(),
+          success: function(data) {
+            event.preventDefault()
+            after_save()
+          }
+        })
+      }
+      else if ($("input#document_title").val() != '') {
+        $.ajax({
+          type: "POST",
+          url: "/documents",
+          data: $("form").serialize(),
+          success: function(data) {
+            event.preventDefault()
+            console.log(data);
+            id = data.id
+            after_save()
+          }
+        })
+
+      }
+    }
+  });
+
+  setInterval(function () {
+    if (id != null && description != $("trix-editor#document_description").val() || content != $("trix-editor#document_content").val()) {
+      $.ajax({
+        type: "PUT",
+        url: "/documents/" + id + "",
+        data: $("form").serialize(),
+        success: function(data) {
+          event.preventDefault()
+          console.log(data);
+          after_save()
+        }
+      })
+    }
+  }, 5000);
+
+  after_save = () => {
+    description = $("trix-editor#document_description").val()
+    content = $("trix-editor#document_content").val()
+    $(".saved").addClass('show')
+    setTimeout(function () {
+      $(".saved").removeClass('show')
+    }, 1000);
+  }
 </script>

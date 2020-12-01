@@ -40,11 +40,13 @@ class DocumentsController < ApplicationController
 
     respond_to do |format|
       if @document.save
-        format.html { redirect_to @document, notice: 'המסמך נוצר בהצלחה ומחכה לאישור המנהלות' }
         format.json { render :show, status: :created, location: @document }
+        format.js {render json: @document.id}
+        format.html { redirect_to @document, notice: 'המסמך נוצר בהצלחה ומחכה לאישור המנהלות' }
       else
         format.html { render :new }
         format.json { render json: @document.errors, status: :unprocessable_entity }
+        format.js
       end
     end
   end
@@ -54,8 +56,8 @@ class DocumentsController < ApplicationController
   def update
     respond_to do |format|
       if @document.update(document_params)
-        format.html { redirect_to @document, notice: 'Document was successfully updated.' }
         format.json { render :show, status: :ok, location: @document }
+        format.html { redirect_to @document, notice: 'Document was successfully updated.' }
       else
         format.html { render :edit }
         format.json { render json: @document.errors, status: :unprocessable_entity }
