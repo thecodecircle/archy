@@ -1,7 +1,7 @@
-<header>
+<header class="">
 
   <!--Nav-->
-  <nav id="header" class="fixed w-full z-30 top-0 text-white">
+  <nav id="header" class="fixed w-full z-30 top-0 text-white bg-blue-600">
 
     <div class="w-full container mx-auto flex flex-wrap items-center justify-between mt-0 py-2">
 
@@ -54,42 +54,42 @@
   var brandname = document.getElementById("brandname");
   var toToggle = document.querySelectorAll(".toggleColour");
 
-  document.addEventListener('scroll', function() {
-
-  /*Apply classes for slide in bar*/
-  scrollpos = window.scrollY;
-
-    if(scrollpos > 10){
-      header.classList.add("bg-white");
-      navaction.classList.remove("bg-white");
-      navaction.classList.add("bg-blue-600");
-      navaction.classList.remove("text-gray-800");
-      navaction.classList.add("text-white");
-      //Use to switch toggleColour colours
-      for (var i = 0; i < toToggle.length; i++) {
-       toToggle[i].classList.add("text-gray-800");
-       toToggle[i].classList.remove("text-white");
-      }
-      header.classList.add("shadow");
-      navcontent.classList.remove("bg-blue-600");
-      navcontent.classList.add("bg-white");
-    }
-    else {
-    header.classList.remove("bg-white");
-    navaction.classList.remove("bg-blue-600");
-    navaction.classList.add("bg-white");
-    navaction.classList.remove("text-white");
-    navaction.classList.add("text-gray-800");
-    //Use to switch toggleColour colours
-    for (var i = 0; i < toToggle.length; i++) {
-     toToggle[i].classList.add("text-white");
-     toToggle[i].classList.remove("text-gray-800");
-    }
-    header.classList.remove("shadow");
-    navcontent.classList.remove("bg-white");
-    navcontent.classList.add("bg-blue-600");
-    }
-  });
+  // document.addEventListener('scroll', function() {
+  //
+  // /*Apply classes for slide in bar*/
+  // scrollpos = window.scrollY;
+  //
+  //   if(scrollpos > 10){
+  //     header.classList.add("bg-white");
+  //     navaction.classList.remove("bg-white");
+  //     navaction.classList.add("bg-blue-600");
+  //     navaction.classList.remove("text-gray-800");
+  //     navaction.classList.add("text-white");
+  //     //Use to switch toggleColour colours
+  //     for (var i = 0; i < toToggle.length; i++) {
+  //      toToggle[i].classList.add("text-gray-800");
+  //      toToggle[i].classList.remove("text-white");
+  //     }
+  //     header.classList.add("shadow");
+  //     navcontent.classList.remove("bg-blue-600");
+  //     navcontent.classList.add("bg-white");
+  //   }
+  //   else {
+  //   header.classList.remove("bg-white");
+  //   navaction.classList.remove("bg-blue-600");
+  //   navaction.classList.add("bg-white");
+  //   navaction.classList.remove("text-white");
+  //   navaction.classList.add("text-gray-800");
+  //   //Use to switch toggleColour colours
+  //   for (var i = 0; i < toToggle.length; i++) {
+  //    toToggle[i].classList.add("text-white");
+  //    toToggle[i].classList.remove("text-gray-800");
+  //   }
+  //   header.classList.remove("shadow");
+  //   navcontent.classList.remove("bg-white");
+  //   navcontent.classList.add("bg-blue-600");
+  //   }
+  // });
 
 
 </script>
