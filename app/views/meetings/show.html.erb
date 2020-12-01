@@ -1,3 +1,4 @@
+<% content_for :title, "#{@meeting.subject} | ארכיון השומר הצעיר" %>
 <div class="mb-2">
     <% if @meeting.team.users.ids.include?(current_user.id) || current_user.admin? %>
     <%= link_to "<i class='material-icons'>edit</i>".html_safe, edit_team_meeting_path(@meeting.team, @meeting), class: "bg-white hover:bg-gray-400 text-blue-600 font-bold py-2 px-4 rounded-full" %>
