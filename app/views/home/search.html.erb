@@ -9,6 +9,28 @@
 <div class="container w-full md:w-4/5  mx-auto px-2 mt-20 text-gray-900">
     <!--Card-->
     <div id='recipients' class="p-8 mt-6 lg:mt-0 rounded shadow bg-white">
+      <%
+=begin%>
+ <table class="hover stripe row-border order-column" id="search-table" data-sort="true" data-source="<%= search_path(format: :json) %>">
+        <thead>
+          <tr>
+            <th data-priority="1" data-data="title">כותרת</th>
+            <th data-priority="2" data-data="description">תיאור</th>
+            <th data-priority="3" data-data="content">תוכן</th>
+            <th data-priority="4" data-data="user">משתמש/צוות</th>
+            <th data-priority="6" data-data="date">שנה</th>
+            <th data-priority="7" data-data="tags">תגיות</th>
+            <% if user_signed_in? && current_user.admin? %>
+              <th data-priority="5" data-data="privacy">פרטיות</th>
+              <% if params[:approving] %>
+                <th data-priority="8" data-data="status">מאושר</th>
+              <% end %>
+            <% end %>
+          </tr>
+        </thead>
+      </table> 
+<%
+=end%>
         <table id="search-table" class="stripe hover">
             <thead>
                 <tr>
@@ -19,10 +41,10 @@
                     <th data-priority="6">שנה</th>
                     <th data-priority="7">תגיות</th>
                     <% if user_signed_in? && current_user.admin? %>
-                    <th data-priority="5">פרטיות</th>
-                    <% if params[:approving] %>
-                    <th data-priority="8">מאושר</th>
-                    <% end %>
+                      <th data-priority="5">פרטיות</th>
+                      <% if params[:approving] %>
+                        <th data-priority="8">מאושר</th>
+                      <% end %>
                     <% end %>
                 </tr>
             </thead>
@@ -36,30 +58,30 @@
                     <td><%= document.date.strftime("%Y") if document.date %></td>
                     <td><%= document.tag_list %></td>
                     <% if user_signed_in? && current_user.admin? %>
-                    <td><%= he_privacy[document.privacy.to_sym] if document.privacy.present? %></td>
-                    <% if params[:approving] %>
-                    <td><%= link_to he_status[document.status.to_sym], toggle_status_path(clicked_document: document.id) %></td>
-                    <% end %>
+                      <td><%= he_privacy[document.privacy.to_sym] if document.privacy.present? %></td>
+                      <% if params[:approving] %>
+                        <td><%= link_to he_status[document.status.to_sym], toggle_status_path(clicked_document: document.id) %></td>
+                      <% end %>
                     <% end %>
                 </tr>
                 <% end %>
                 <% unless params[:approving] %>
-                <% @meetings.each do |meeting| %>
-                <tr>
-                    <td><%= link_to meeting.subject, team_meeting_path(meeting, meeting.team) %></td>
-                    <td>לפגישות אין תיאור</td>
-                    <td><%= meeting.content %></td>
-                    <td><%= meeting.team.name %> </td>
-                    <td><%= meeting.created_at.strftime("%Y") %></td>
-                    <td><%= meeting.tag_list %></td>
-                    <% if user_signed_in? && current_user.admin? %>
-                    <td><%= he_privacy[meeting.privacy.to_sym] %></td>
-                    <% if params[:approving] %>
-                    <td></td>
-                    <% end %>
-                    <% end %>
-                </tr>
-                <% end %>
+                  <% @meetings.each do |meeting| %>
+                    <tr>
+                        <td><%= link_to meeting.subject, team_meeting_path(meeting, meeting.team) %></td>
+                        <td>לפגישות אין תיאור</td>
+                        <td><%= meeting.content %></td>
+                        <td><%= meeting.team.name %> </td>
+                        <td><%= meeting.created_at.strftime("%Y") %></td>
+                        <td><%= meeting.tag_list %></td>
+                        <% if user_signed_in? && current_user.admin? %>
+                          <td><%= he_privacy[meeting.privacy.to_sym] %></td>
+                          <% if params[:approving] %>
+                            <td></td>
+                          <% end %>
+                        <% end %>
+                    </tr>
+                  <% end %>
                 <% end %>
             </tbody>
         </table>

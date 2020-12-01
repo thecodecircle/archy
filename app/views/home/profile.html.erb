@@ -1,69 +1,89 @@
 <h1>הפרופיל של <%= current_user.name %></h1>
 <div class="my-2">
-  <div class="">
-    <strong>רמת הסיווג שלי:</strong> <%= he_status[current_user.status.to_sym] %>
-  </div>
-  <!--Container-->
-  <div class="container w-full md:w-4/5  mx-auto px-2 mt-20 text-gray-900">
-    <h3 class="text-white text-2xl">הדברים שלי</h3>
-  <!--Card-->
-    <div id='recipients' class="p-8 mt-6 lg:mt-0 rounded shadow bg-white">
-    	<table id="table" class="stripe hover">
-    		<thead>
-    			<tr>
-    				<th data-priority="1">כותרת</th>
-    				<th data-priority="2">תיאור</th>
-            <th data-priority="4">משתמש/צוות</th>
-    				<th data-priority="5">פרטיות</th>
-    				<th data-priority="6">שנה</th>
-    				<th data-priority="7">מאושר</th>
-            <th data-priority="8"></th>
-            <!-- <th data-priority="9"></th> -->
-    			</tr>
-    		</thead>
-    		<tbody>
-          <% current_user.documents.each do |document| %>
-            <tr>
-                <td><%= link_to document.title, document %></td>
-                <td><%= document.description %></td>
-                <td><%= User.find(document.user_id).name %></td>
-                <td><%= he_privacy[document.privacy.to_sym] if document.privacy.present? %></td>
-                <td><%= document.date.strftime("%Y") if document.date %></td>
-                <td><%= he_status[document.status.to_sym] %></td>
-                <td><%= link_to 'עריכה', edit_document_path(document) %> | 
-                <%= link_to 'מחיקה', document, method: :delete, data: { confirm: 'בטוח\ה?' } %></td>
-            </tr>
-          <% end %>
-          <% current_user.teams.each do |team| %>
-            <% team.meetings.each do |meeting| %>
-              <tr>
-                  <td><%= link_to meeting.subject, team_meeting_path(meeting, meeting.team) %></td>
-                  <td>לפגישות אין תיאור</td>
-                  <td><%= meeting.team.name %> </td>
-                  <td><%= he_privacy[meeting.privacy.to_sym] %></td>
-                  <td><%= meeting.created_at.strftime("%Y") %></td>
-                  <td>פגישות לא צריכות אישור</td>
-                  <td><%= link_to 'עריכה', edit_team_meeting_path(team, meeting) %> |
-                  <%= link_to 'מחיקה', team_meeting_path(team, meeting), method: :delete, data: { confirm: 'בטוח\ה?' } %></td>
-              </tr>
-            <% end %>
-          <% end %>
-    		</tbody>
-    	</table>
+    <div class="">
+        <strong>רמת הסיווג שלי:</strong> <%= he_status[current_user.status.to_sym] %>
     </div>
-    <!--/Card-->
-  </div>
-  <!--/container-->
+    <!--Container-->
+    <div class="container w-full md:w-4/5  mx-auto px-2 mt-20 text-gray-900">
+        <h3 class="text-white text-2xl">הדברים שלי</h3>
+        <!--Card-->
+        <div id='recipients' class="p-8 mt-6 lg:mt-0 rounded shadow bg-white">
+            <table id="profile-table" class="stripe hover">
+                <thead>
+                    <tr>
+                        <th data-priority="1">כותרת</th>
+                        <th data-priority="2">תיאור</th>
+                        <th data-priority="3">תוכן</th>
+                        <th data-priority="4">משתמש/צוות</th>
+                        <th data-priority="5">פרטיות</th>
+                        <th data-priority="6">שנה</th>
+                        <th data-priority="7">מאושר</th>
+                        <th data-priority="8">תגיות</th>
+                        <th data-priority="9"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% current_user.documents.each do |document| %>
+                    <tr>
+                        <td><%= link_to document.title, document %></td>
+                        <td><%= document.description %></td>
+                        <td><%= document.content %></td>
+                        <td><%= User.find(document.user_id).name %></td>
+                        <td><%= he_privacy[document.privacy.to_sym] if document.privacy.present? %></td>
+                        <td><%= document.date.strftime("%Y") if document.date %></td>
+                        <td><%= he_status[document.status.to_sym] %></td>
+                        <td><%= document.tag_list %></td>
+                        <td><%= link_to "<i class='material-icons'>edit</i>".html_safe, edit_document_path(document) %> 
+                            <%= link_to "<i class='material-icons'>delete</i>".html_safe, document, method: :delete, data: { confirm: 'בטוח\ה?' } %></td>
+                    </tr>
+                    <% end %>
+                    <% current_user.teams.each do |team| %>
+                    <% team.meetings.each do |meeting| %>
+                    <tr>
+                        <td><%= link_to meeting.subject, team_meeting_path(meeting, meeting.team) %></td>
+                        <td>לפגישות אין תיאור</td>
+                        <td><%= meeting.content %></td>
+                        <td><%= meeting.team.name %> </td>
+                        <td><%= he_privacy[meeting.privacy.to_sym] %></td>
+                        <td><%= meeting.created_at.strftime("%Y") %></td>
+                        <td>פגישות לא צריכות אישור</td>
+                        <td><%= meeting.tag_list %></td>
+                        <td><%= link_to "<i class='material-icons'>edit</i>".html_safe, edit_team_meeting_path(team, meeting) %> 
+                            <%= link_to "<i class='material-icons'>delete</i>".html_safe, team_meeting_path(team, meeting), method: :delete, data: { confirm: 'בטוח\ה?' } %></td>
+                    </tr>
+                    <% end %>
+                    <% end %>
+                </tbody>
+            </table>
+        </div>
+        <!--/Card-->
+    </div>
+    <!--/container-->
 
-<div class="my-2">
-  <h3 class="text-2xl">ההישגים שלי</h3>
-  <% if @user.achievement_list.empty? %>
-    אין הישגים עדיין
-  <% else %>
-    <ul>
-      <% @user.achievement_list.each do |achievement| %>
-      <li><%= achievement %></li>
-      <% end %>
-    </ul>
-  <% end %>
-</div>
+    <div class="my-2">
+        <h3 class="text-2xl">ההישגים שלי</h3>
+        <% if @user.achievement_list.empty? %>
+        אין הישגים עדיין
+        <% else %>
+        <ul>
+            <% @user.achievement_list.each do |achievement| %>
+            <li><%= achievement %></li>
+            <% end %>
+        </ul>
+        <% end %>
+    </div>
+
+    <script>
+        $(document).ready(function() {
+            $('#profile-table').DataTable({
+                "columnDefs": [{
+                    "targets": [2],
+                    "visible": false,
+                }],
+                responsive: true,
+                language: {
+                    "url": "//cdn.datatables.net/plug-ins/1.10.21/i18n/Hebrew.json"
+                }
+            });
+        });
+    </script>
