@@ -236,7 +236,14 @@ trix-editor.focused{
   border-top: 1px solid rgba(0, 0, 0, 0.2) !important;
   border-radius: 0 0 10px 10px;
 }
-
+form.doc-meet{
+  width: 100%;
+  display: grid;
+  > div{
+    width: 75vw;
+    justify-self: center;
+  }
+}
 .rising-label{
   position: relative;
 
@@ -262,9 +269,11 @@ trix-editor.focused{
 .first-details{
   display: grid;
   grid-template-columns: 1fr 1fr 2fr;
+  grid-gap: 20px;
   input{
     height: 50px;
     padding: 16px;
+    width: 100%;
   }
 
 }
@@ -287,4 +296,17 @@ trix-editor.focused{
 
 ::-ms-input-placeholder { /* Microsoft Edge */
   color: #adbed4;
+}
+
+.actions{
+  // display: flex;
+
+  button{
+    padding: 1rem;
+    background: #3182ce;
+    display: flex;
+    color: white;
+    align-items: center;
+    height: 50%;
+  }
 }
