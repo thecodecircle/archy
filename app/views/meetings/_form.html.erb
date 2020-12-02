@@ -1,69 +1,162 @@
-<%= form_with(model: [@team, @meeting], local: true) do |form| %>
-  <% if meeting.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(meeting.errors.count, "error") %> prohibited this meeting from being saved:</h2>
+<%= form_with(model: [@team, @meeting], local: false) do |form| %>
+<% if meeting.errors.any? %>
+<div id="error_explanation">
+    <h2><%= pluralize(meeting.errors.count, "error") %> prohibited this meeting from being saved:</h2>
 
-      <ul>
+    <ul>
         <% meeting.errors.full_messages.each do |message| %>
-          <li><%= message %></li>
+        <li><%= message %></li>
         <% end %>
-      </ul>
-    </div>
-  <% end %>
+    </ul>
+</div>
+<% end %>
 
-  <div class="field">
+<span class="saved">המסמך נשמר!</span>
+<div class="field">
     <%= form.label :subject, "נושא הפגישה" %>
     <%= form.text_area :subject %>
-  </div>
+</div>
 
-  <div class="field">
+<div class="field">
     <%= form.label :content, "תוכן הפגישה" %>
     <%= form.rich_text_area :content %>
-  </div>
+</div>
 
-  <div class="field">
+<div class="field">
     <%= form.label :tag_list, "תגיות" %>
     <%= form.collection_select :tag_list, ActsAsTaggableOn::Tag.all, :name, :name, {prompt: 'בחירת חברי הצוות'}, {multiple: true, class: "select2_tags", style: "width: 100%;"} %>
-  </div>
+</div>
 
-  <div class="field">
+<div class="field">
     <%= form.label :user_ids, "חברי וחברות צוות שנכחו בפגישה" %>
     <%= form.collection_select :user_ids, @team.users, :id, :name, {prompt: 'בחירת חברי הצוות'}, {multiple: true, class: "select2", style: "width: 100%;"} %>
-  </div>
+</div>
 
-  <div class="field">
+<div class="field">
     <%= form.label :privacy, "פרטיות: " %>
     <% privacy_options = [["צוותי", "team"], ["ציבורי", "commons"]] %>
-    <%= form.select :privacy, privacy_options, { include_blank: true } %>
-  </div>
+    <%= form.select :privacy, privacy_options, { include_blank: false } %>
+</div>
 
-  <div class="field">
+<div class="field">
     <%= form.label :attachments, "העלאת קבצים:" %>
     <%= form.file_field :attachments, multiple: true %>
-    <p style="font-size: 0.8rem">ניתן להעלות קבצי PDF,  אופיס, תמונות, סרטונים והקלטות קוליות</p>
-  </div>
+    <p style="font-size: 0.8rem">ניתן להעלות קבצי PDF, אופיס, תמונות, סרטונים והקלטות קוליות</p>
+</div>
 
-  <div class="field">
+<div class="field">
     <%= form.label :current_attachments, "קבצים מצורפים כרגע:" %>
     <ul>
-      <% @meeting.attachments.all.each do |attachment| %>
+        <% @meeting.attachments.all.each do |attachment| %>
         <li class="my-4"><%# image_tag attachment.preview(resize_to_limit: [300, 300]) %></li>
         <li class="my-4"><%= attachment.blob.filename %></li>
-      <% end %>
+        <% end %>
     </ul>
-  </div>
+</div>
 
-  <div class="actions">
+<div class="actions">
     <%= form.submit "שליחה", class: "p-2 rounded" %>
-  </div>
+</div>
 <% end %>
 
 <script>
-  $(document).ready(function() {
-    $('.select2').select2();
-    $('.select2_tags').select2({
-      tags: true,
-      tokenSeparators: [',']
+    $(document).ready(function() {
+        $('.select2').select2();
+        $('.select2_tags').select2({
+            tags: true,
+            tokenSeparators: [','],
+            placeholder: 'תגיות'
+        });
     });
-  });
+</script>
+
+<script>
+    var changes = 0
+    var id = null
+    var team_id = <%= params[:team_id] %>
+    var content
+    var time_idle = 0
+    $("trix-editor").css('border-top', 'none');
+    $("trix-editor").focus(function(event) {
+        $(event.target).closest('.field').find('.trix-button-row').css("display", "flex")
+        $(event.target).addClass('focused')
+    });
+    $("trix-editor").blur(function(event) {
+        $(event.target).closest('.field').find('.trix-button-row').css("display", "none")
+        $(event.target).removeClass('focused')
+    });
+    $("trix-editor").on('trix-change', function(event) {
+      console.log(id);
+        changes++
+        time_idle = 0
+        if (changes >= 10) {
+            changes = 0
+            if (id != null) {
+                $.ajax({
+                    type: "PUT",
+                    url: "/teams/" + team_id + "/meetings/" + id + "",
+                    data: $("form").serialize(),
+                    success: function(data) {
+                        console.log();
+                        event.preventDefault()
+                        after_save()
+                    }
+                })
+            } else if ( <%= action_name == "edit" %> ) {
+                id = <%= params[:id] %>
+                    $.ajax({
+                        type: "PUT",
+                        url: "/teams/" + team_id + "/meetings/" + id + "",
+                        data: $("form").serialize(),
+                        success: function(data) {
+                            console.log();
+                            event.preventDefault()
+                            after_save()
+                        }
+                    })
+            } else if ($("input#meeting_subject").val() != '') {
+                $.ajax({
+                    type: "POST",
+                    url: "/teams/" + team_id + "/meetings",
+                    data: $("form").serialize(),
+                    success: function(data) {
+                      console.log("create");
+                        event.preventDefault()
+                        console.log(data);
+                        id = data
+                        after_save()
+                    }
+                })
+            }
+
+        }
+    });
+
+    setInterval(function() {
+        if (id != null && content != $("trix-editor#meeting_content").val()) {
+            $.ajax({
+                type: "PUT",
+                url: "/teams/" + team_id + "/meetings/" + id + "",
+                data: $("form").serialize(),
+                success: function(data) {
+                    event.preventDefault()
+                    console.log();
+                    after_save()
+                }
+            })
+        } else {
+            time_idle = time_idle + 5000
+        }
+        if (time_idle >= 60000) {
+            // $("form").submit()
+        }
+    }, 5000);
+
+    after_save = () => {
+        content = $("trix-editor#meeting_content").val()
+        $(".saved").addClass('show')
+        setTimeout(function() {
+            $(".saved").removeClass('show')
+        }, 1000);
+    }
 </script>

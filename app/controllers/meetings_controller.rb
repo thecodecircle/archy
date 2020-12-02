@@ -32,11 +32,13 @@ class MeetingsController < ApplicationController
 
     respond_to do |format|
       if @meeting.save
-        format.html { redirect_to team_meeting_path(@team, @meeting), notice: 'Meeting was successfully created.' }
+        format.js {render json: @meeting.id}
         format.json { render :show, status: :created, location: @meeting }
+        format.html { redirect_to team_meeting_path(@team, @meeting), notice: 'Meeting was successfully created.' }
       else
-        format.html { render :new }
         format.json { render json: @meeting.errors, status: :unprocessable_entity }
+        format.js
+        format.html { render :new }
       end
     end
   end
@@ -47,11 +49,13 @@ class MeetingsController < ApplicationController
     @team = Team.find(params[:team_id])
     respond_to do |format|
       if @meeting.update(meeting_params)
+        format.js {render json: @meeting.id}
         format.html { redirect_to team_meeting_path(@team, @meeting), notice: 'Meeting was successfully updated.' }
         format.json { render :show, status: :ok, location: @meeting }
       else
         format.html { render :edit }
         format.json { render json: @meeting.errors, status: :unprocessable_entity }
+        format.js {render json: @meeting.id}
       end
     end
   end
