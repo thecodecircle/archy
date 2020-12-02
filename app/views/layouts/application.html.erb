@@ -4,7 +4,7 @@
     <title><%= content_for?(:title) ? yield(:title) : "ארכיון השומר הצעיר" %></title>
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
-    <meta property="og:title" content=<%= content_for?(:title) ? yield(:title) : "ארכיון השומר הצעיר" %> />
+    <meta property="og:title" content="<%= content_for?(:title) ? yield(:title) : "ארכיון השומר הצעיר" %>" />
     <meta property="og:description" content="פרויקט לתיעוד תנועת השומר הצעיר" /> 
     <meta property="og:type" content="website" />
     <!-- <meta property="og:image" content="<%# image_url('fenix.png') %>" /> -->
