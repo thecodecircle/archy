@@ -5,59 +5,72 @@
 <a href="whatsapp://send?text=<%= request.base_url %>/join_team?t=<%= @team.id %>" class="bg-white hover:bg-gray-400 text-blue-600 font-bold py-2 px-4 rounded-full"><i class='material-icons'>share</i></a>
 
 <p>
-  <strong>שם הצוות:</strong>
-  <%= @team.name %>
+    <strong>שם הצוות:</strong>
+    <%= @team.name %>
 </p>
 
 <p>
-  <strong>משתמשים משוייכים לצוות:</strong>
-  <ul>
+    <strong>משתמשים משוייכים לצוות:</strong>
+<ul>
     <% @team.users.each do |user| %>
-      <li><%= user.name %></li>
+    <li><%= user.name %></li>
     <% end %>
-  </ul>
+</ul>
 </p>
 
 <p>
-  <strong>תגיות:</strong>
-  <%= @team.tag_list %>
+    <strong>תגיות:</strong>
+    <%= @team.tag_list %>
 </p>
 
 <h1>פגישות של <%= @team.name %>
-<%= link_to "<i class='material-icons'>edit</i>".html_safe, edit_team_path(@team) %>
-<%= link_to "<i class='material-icons'>delete</i>".html_safe, team_path(@team), method: :delete, data: { confirm: "בטוח\ה?" } %></h1>
+    <%= link_to "<i class='material-icons'>edit</i>".html_safe, edit_team_path(@team) %>
+    <%= link_to "<i class='material-icons'>delete</i>".html_safe, team_path(@team), method: :delete, data: { confirm: "בטוח\ה?" } %></h1>
 
 <!--Container-->
 <div class="container w-full md:w-4/5 xl:w-3/5  mx-auto px-2 mt-20 text-gray-900">
-<!--Card-->
-  <div id='recipients' class="p-8 mt-6 lg:mt-0 rounded shadow bg-white">
-  	<table id="table" class="stripe hover">
-  		<thead>
-  			<tr>
-  				<th data-priority="1">כותרת</th>
-  				<!-- <th data-priority="2">צוות</th> -->
-  				<th data-priority="3">תוכן</th>
-  				<th data-priority="4">פרטיות</th>
-  				<th data-priority="5">מספר קבצים מצורפים</th>
-  				<th data-priority="6"></th>
-  			</tr>
-  		</thead>
-  		<tbody>
-        <% @team.meetings.each do |meeting| %>
-          <tr>
-              <td><%= link_to meeting.subject, team_meeting_path(@team, meeting) %></td>
-              <!-- <td><%= Team.find(meeting.team_id).name %></td> -->
-              <td><%= meeting.content %></td>
-              <td><%= he_privacy[meeting.privacy.to_sym] %></td>
-              <td><%= meeting.attachments.count %></td>
-              <td><%= link_to "<i class='material-icons'>edit</i>".html_safe, edit_team_meeting_path(@team, meeting) %>
-                  <%= link_to "<i class='material-icons'>delete</i>".html_safe, team_meeting_path(@team, meeting), method: :delete, data: { confirm: 'בטוח\ה?' } %>
-              </td>
-          </tr>
-        <% end %>
-  		</tbody>
-  	</table>
-  </div>
-  <!--/Card-->
+    <!--Card-->
+    <div id='recipients' class="p-8 mt-6 lg:mt-0 rounded shadow bg-white">
+        <table id="team-table" class="stripe hover">
+            <thead>
+                <tr>
+                    <th data-priority="1">כותרת</th>
+                    <th data-priority="3">תוכן</th>
+                    <th data-priority="4">פרטיות</th>
+                    <th data-priority="5">מספר קבצים מצורפים</th>
+                    <th data-priority="6"></th>
+                </tr>
+            </thead>
+            <tbody>
+                <% @team.meetings.each do |meeting| %>
+                <tr>
+                    <td><%= link_to meeting.subject, team_meeting_path(@team, meeting) %></td>
+                    <td><%= meeting.content %></td>
+                    <td><%= he_privacy[meeting.privacy.to_sym] %></td>
+                    <td><%= meeting.attachments.count %></td>
+                    <td><%= link_to "<i class='material-icons'>edit</i>".html_safe, edit_team_meeting_path(@team, meeting) %>
+                        <%= link_to "<i class='material-icons'>delete</i>".html_safe, team_meeting_path(@team, meeting), method: :delete, data: { confirm: 'בטוח\ה?' } %>
+                    </td>
+                </tr>
+                <% end %>
+            </tbody>
+        </table>
+    </div>
+    <!--/Card-->
 </div>
 <!--/container-->
+
+<script>
+    $(document).ready(function() {
+        $('#team-table').DataTable({
+            "columnDefs": [{
+                "targets": [1],
+                "visible": false,
+            }],
+            responsive: true,
+            language: {
+                "url": "//cdn.datatables.net/plug-ins/1.10.21/i18n/Hebrew.json"
+            }
+        });
+    });
+</script>
