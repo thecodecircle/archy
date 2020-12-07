@@ -4,7 +4,7 @@
     <title><%= content_for?(:title) ? yield(:title) : "ארכיון השומר הצעיר" %></title>
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
-    <meta property="og:description" content="פרויקט לתיעוד תנועת השומר הצעיר" /> 
+    <meta property="og:description" content="פרויקט לתיעוד תנועת השומר הצעיר" />
     <meta property="og:type" content="website" />
     <!-- <meta property="og:image" content="<%# image_url('fenix.png') %>" /> -->
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -35,17 +35,17 @@
     <%= render "layouts/footer" unless current_page?(intro_path) ||  current_page?(intro2_path) ||  current_page?(intro3_path) %>
     <script>
       $(document).ready(function() {
-        var count_fixes = 0
-        fix_footer = () => {
-          if (count_fixes >= 10) {
-            clearInterval(footer);
-          }
-          if ($('main').height() < $(window).height()) {
-            $("footer").addClass('absolute bottom-0')
-          }
-          count_fixes++
-        }
-        var footer = setInterval(fix_footer(), 100);
+        // var count_fixes = 0
+        // fix_footer = () => {
+        //   if (count_fixes >= 10) {
+        //     clearInterval(footer);
+        //   }
+        //   if ($('main').height() < $(window).height()) {
+        //     $("footer").addClass('absolute bottom-0')
+        //   }
+        //   count_fixes++
+        // }
+        // var footer = setInterval(fix_footer(), 100);
       var table = $('#table').DataTable( {
           responsive: true,
           language: {

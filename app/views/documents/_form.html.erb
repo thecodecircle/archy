@@ -1,16 +1,18 @@
-<%= form_with(model: document, local: true) do |form| %>
+<%= form_with(model: document, local: true, class:"doc-meet") do |form| %>
+<div class="">
   <% if document.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(document.errors.count, "error") %> prohibited this document from being saved:</h2>
+  <div id="error_explanation">
+    <h2><%= pluralize(document.errors.count, "error") %> prohibited this document from being saved:</h2>
 
-      <ul>
-        <% document.errors.full_messages.each do |message| %>
-          <li><%= message %></li>
-        <% end %>
-      </ul>
-    </div>
+    <ul>
+      <% document.errors.full_messages.each do |message| %>
+      <li><%= message %></li>
+      <% end %>
+    </ul>
+  </div>
   <% end %>
-<span class="saved">המסמך נשמר!</span>
+  <span class="saved">המסמך נשמר!</span>
+
   <div class="first-details">
     <div class="field flex-auto w-full rising-label">
       <%= form.text_field :title, required: true %>
@@ -36,31 +38,37 @@
     <%= form.rich_text_area :content %>
   </div>
 
-  <div class="field">
-    <%= form.label :privacy, "הגדרת פרטיות:" %>
-    <% privacy_options = [["פרטי", "personal"], ["פנים תנועתי", "internal"], ["ציבורי", "commons"]] %>
-    <%= form.select :privacy, privacy_options %>
-  </div>
 
-  <div class="field">
-    <%= form.label :attachments, "העלאת קבצים:" %>
-    <%= form.file_field :attachments, multiple: true %>
-    <p style="font-size: 0.8rem">ניתן להעלות קבצי PDF,  אופיס, תמונות, סרטונים והקלטות קוליות</p>
-  </div>
   <% if @document.attachments.present? %>
-    <div class="field">
-      <%= form.label :current_attachments, "קבצים מצורפים כרגע:" %>
-      <ul>
-        <% @document.attachments.all.each do |attachment| %>
-          <li class="my-4"><%# image_tag attachment.preview(resize_to_limit: [300, 300]) %></li>
-          <li class="my-4"><%= attachment.blob.filename %></li>
-        <% end %>
-      </ul>
-    </div>
-  <% end %>
-  <div class="actions">
-    <%= form.submit "שמירה", class: "p-2 rounded" %>
+  <div class="field">
+    <%= form.label :current_attachments, "קבצים מצורפים כרגע:" %>
+    <ul>
+      <% @document.attachments.all.each do |attachment| %>
+      <li class="my-4"><%# image_tag attachment.preview(resize_to_limit: [300, 300]) %></li>
+      <li class="my-4"><%= attachment.blob.filename %></li>
+      <% end %>
+    </ul>
   </div>
+  <% end %>
+
+  <div class="actions">
+    <div class="action">
+      <%= form.submit "שמירה", class: "p-2 rounded" %>
+    </div>
+    <div class="field">
+      <%= form.label :privacy, "פרטיות" %>
+      <% privacy_options = [["פרטי", "personal"], ["פנים תנועתי", "internal"], ["ציבורי", "commons"]] %>
+      <%= form.select :privacy, privacy_options %>
+    </div>
+    <!-- <button type="button" name="button"><i class='material-icons'>attachment</i>קבצים</button> -->
+    <!-- <button type="button" name="button"><i class='material-icons'>lock</i>פרטיות</button> -->
+    <div class="field">
+      <%= form.label :privacy, "קבצים" %>
+      <%= form.file_field :attachments, multiple: true %>
+      <p style="font-size: 0.8rem">ניתן להעלות קבצי PDF,  אופיס, תמונות, סרטונים והקלטות קוליות</p>
+    </div>
+  </div>
+</div>
 <% end %>
 
 <script>
