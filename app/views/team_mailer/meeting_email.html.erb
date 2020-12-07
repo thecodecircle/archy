@@ -1,15 +1,14 @@
 <!DOCTYPE html>
-<html dir="rtl">
+<html>
   <head>
     <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
   </head>
   <body>
-    <%= puts "******************inside meeting email**********************" %>
-    <h1>סיכום פגישה על <%= @meeting.subject %> של <%= @meeting.team.name %></h1>
+    <h1><%= @meeting.subject %> | <%= @meeting.team.name %></h1>
     <%= @meeting.content %>
     <p>
-      נשלח ע"י <%= @user.name %> דרך ארכיון השומר הצעיר
-      https://archy.codecircle.co.il/
+      נשלח ע"י <%= @user.name %> דרך ארכיון השומר הצעיר <br>
+      https://archy.codecircle.co.il
     </p>
   </body>
 </html>

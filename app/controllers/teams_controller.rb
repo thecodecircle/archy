@@ -20,10 +20,12 @@ class TeamsController < ApplicationController
   # GET /teams/new
   def new
     @team = Team.new
+    @users = User.where.not(id: current_user.id)
   end
 
   # GET /teams/1/edit
   def edit
+    @users = User.all
   end
 
   # POST /teams
@@ -34,7 +36,7 @@ class TeamsController < ApplicationController
 
     respond_to do |format|
       if @team.save
-        format.html { redirect_to @team, notice: 'Team was successfully created.' }
+        format.html { redirect_to @team, notice: 'הצוות נוצר בהצלחה.' }
         format.json { render :show, status: :created, location: @team }
       else
         format.html { render :new }
@@ -48,7 +50,7 @@ class TeamsController < ApplicationController
   def update
     respond_to do |format|
       if @team.update(team_params)
-        format.html { redirect_to @team, notice: 'Team was successfully updated.' }
+        format.html { redirect_to @team, notice: 'הצוות עודכן בהצלחה.' }
         format.json { render :show, status: :ok, location: @team }
       else
         format.html { render :edit }
@@ -62,7 +64,7 @@ class TeamsController < ApplicationController
   def destroy
     @team.destroy
     respond_to do |format|
-      format.html { redirect_to teams_url, notice: 'Team was successfully destroyed.' }
+      format.html { redirect_to teams_url, notice: 'הצוות נמחק בהצלחה.' }
       format.json { head :no_content }
     end
   end
