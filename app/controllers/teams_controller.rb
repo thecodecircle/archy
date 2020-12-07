@@ -20,10 +20,12 @@ class TeamsController < ApplicationController
   # GET /teams/new
   def new
     @team = Team.new
+    @users = User.where.not(id: current_user.id)
   end
 
   # GET /teams/1/edit
   def edit
+    @users = User.all
   end
 
   # POST /teams
@@ -46,7 +48,6 @@ class TeamsController < ApplicationController
   # PATCH/PUT /teams/1
   # PATCH/PUT /teams/1.json
   def update
-    @team.users << current_user
     respond_to do |format|
       if @team.update(team_params)
         format.html { redirect_to @team, notice: 'הצוות עודכן בהצלחה.' }
