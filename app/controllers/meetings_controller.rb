@@ -34,7 +34,7 @@ class MeetingsController < ApplicationController
       if @meeting.save
         format.js {render json: @meeting.id}
         format.json { render :show, status: :created, location: @meeting }
-        format.html { redirect_to team_meeting_path(@team, @meeting), notice: 'Meeting was successfully created.' }
+        format.html { redirect_to team_meeting_path(@team, @meeting), notice: 'הפגישה נוצרה בהצלחה.' }
       else
         format.json { render json: @meeting.errors, status: :unprocessable_entity }
         format.js
@@ -50,7 +50,7 @@ class MeetingsController < ApplicationController
     respond_to do |format|
       if @meeting.update(meeting_params)
         format.js {render json: @meeting.id}
-        format.html { redirect_to team_meeting_path(@team, @meeting), notice: 'Meeting was successfully updated.' }
+        format.html { redirect_to team_meeting_path(@team, @meeting), notice: 'הפגישה נמחקה בהצלחה.' }
         format.json { render :show, status: :ok, location: @meeting }
       else
         format.html { render :edit }
@@ -63,9 +63,10 @@ class MeetingsController < ApplicationController
   # DELETE /meetings/1
   # DELETE /meetings/1.json
   def destroy
+    @team = @meeting.team
     @meeting.destroy
     respond_to do |format|
-      format.html { redirect_to meetings_url, notice: 'Meeting was successfully destroyed.' }
+      format.html { redirect_to team_path(@team), notice: 'הפגישה נמחקה בהצלחה.' }
       format.json { head :no_content }
     end
   end
