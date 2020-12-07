@@ -57,7 +57,7 @@ class DocumentsController < ApplicationController
     respond_to do |format|
       if @document.update(document_params)
         format.json { render :show, status: :ok, location: @document }
-        format.html { redirect_to @document, notice: 'Document was successfully updated.' }
+        format.html { redirect_to @document, notice: 'המסמך עודכן בהצלחה.' }
       else
         format.html { render :edit }
         format.json { render json: @document.errors, status: :unprocessable_entity }
@@ -70,7 +70,7 @@ class DocumentsController < ApplicationController
   def destroy
     @document.destroy
     respond_to do |format|
-      format.html { redirect_to root_path, notice: 'Document was successfully destroyed.' }
+      format.html { redirect_to root_path, notice: 'המסמך נמחק בהצלחה.' }
       format.json { head :no_content }
     end
   end
