@@ -270,7 +270,7 @@ form.doc-meet{
 }
 .first-details{
   display: grid;
-  grid-template-columns: 1fr 1fr 2fr;
+  grid-template-columns:  repeat(auto-fit, minmax(200px, 1fr));
   grid-gap: 20px;
   input{
     height: 50px;
@@ -302,16 +302,19 @@ form.doc-meet{
 
 .actions{
   display: flex;
-
+  flex-wrap: wrap;
   button, input[type=submit]{
     padding: 10px;
     background: #3182ce;
     display: flex;
     color: white;
     align-items: center;
-    color: white;
     margin-left: 1rem;
     border-radius: 100px;
+  }
+  button:hover, input[type=submit]:hover,
+  button:focus, input[type=submit]:focus{
+    background: #065daf;
   }
 }
 
@@ -394,14 +397,34 @@ form.doc-meet{
 
 .slider:before {
   position: absolute;
-  content: "";
+  content: attr(data-icon);
   height: 26px;
   width: 26px;
   left: 4px;
   bottom: 4px;
   background-color: white;
+  color: #3182ce;
+  text-align: center;
   -webkit-transition: .4s;
   transition: .4s;
+  font-family: 'Material Icons';
+  font-weight: normal;
+  font-style: normal;
+  font-size: 1rem;
+  display: inline-block;
+  vertical-align: middle;
+  text-transform: none;
+  letter-spacing: normal;
+  word-wrap: normal;
+  white-space: nowrap;
+  direction: ltr;
+  -webkit-font-smoothing: antialiased;
+
+  text-rendering: optimizeLegibility;
+
+  -moz-osx-font-smoothing: grayscale;
+
+  font-feature-settings: 'liga';
 }
 
 input:checked + .slider {

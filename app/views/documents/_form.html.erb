@@ -40,12 +40,12 @@
     </div>
 
     <div class="field form-privacy">
-      <span class="internal switch-labels">תנועתי</span>
+      <span class="internal switch-labels">ציבורי</span>
       <%= form.label :privacy, class:"switch" do %>
         <%= form.check_box :privacy, { class:"checkbox"} , "commons", "internal"%>
-        <span class="slider round"></span>
+        <span class="slider round"  data-icon="lock"></span>
       <% end %>
-      <span class="commons switch-labels">ציבורי</span>
+      <span class="commons switch-labels">תנועתי</span>
     </div>
   </div>
 </div>
