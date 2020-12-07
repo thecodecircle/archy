@@ -12,7 +12,43 @@
   </div>
   <% end %>
   <span class="saved">המסמך נשמר!</span>
+  <div class="actions">
+    <div class="action">
+      <%= button_tag do %>
+        <i class='material-icons'>save</i> שמירה
+      <% end %>
+    </div>
 
+
+    <% if @document.attachments.present? %>
+      <button type="button" name="button" class="open-upload-files uploaded"><i class='material-icons'>attachment</i>קבצים</button>
+    <% else %>
+      <button type="button" name="button" class="open-upload-files"><i class='material-icons'>attachment</i>קבצים</button>
+    <% end %>
+    <!-- <button type="button" name="button"><i class='material-icons'>lock</i>פרטיות</button> -->
+    <div class="field form-files">
+      <button type="button" id="upload-files" onclick="$('.file-upload-input').trigger( 'click' )">בחירת קבצים</button>
+      <%= form.file_field :attachments, multiple: true, class:"file-upload-input" %>
+      <ul class="files">
+      <% if  @document.attachments.present? %>
+        <% @document.attachments.each do |attachment| %>
+          <li><%= attachment.filename %></li>
+        <% end %>
+      <% end %></ul>
+      <p style="font-size: 0.8rem">ניתן להעלות מספר קבצי PDF,  אופיס, תמונות, סרטונים והקלטות קוליות</p>
+      <button type="button" name="button" id="ok" class="close-upload-files">אישור</button>
+    </div>
+
+    <div class="field form-privacy">
+      <span class="internal switch-labels">תנועתי</span>
+      <%= form.label :privacy, class:"switch" do %>
+        <%= form.check_box :privacy, { class:"checkbox"} , "commons", "internal"%>
+        <span class="slider round"></span>
+      <% end %>
+      <span class="commons switch-labels">ציבורי</span>
+    </div>
+  </div>
+</div>
   <div class="first-details">
     <div class="field flex-auto w-full rising-label">
       <%= form.text_field :title, required: true %>
@@ -38,37 +74,6 @@
     <%= form.rich_text_area :content %>
   </div>
 
-
-  <% if @document.attachments.present? %>
-  <div class="field">
-    <%= form.label :current_attachments, "קבצים מצורפים כרגע:" %>
-    <ul>
-      <% @document.attachments.all.each do |attachment| %>
-      <li class="my-4"><%# image_tag attachment.preview(resize_to_limit: [300, 300]) %></li>
-      <li class="my-4"><%= attachment.blob.filename %></li>
-      <% end %>
-    </ul>
-  </div>
-  <% end %>
-
-  <div class="actions">
-    <div class="action">
-      <%= form.submit "שמירה", class: "p-2 rounded" %>
-    </div>
-    <div class="field">
-      <%= form.label :privacy, "פרטיות" %>
-      <% privacy_options = [["פרטי", "personal"], ["פנים תנועתי", "internal"], ["ציבורי", "commons"]] %>
-      <%= form.select :privacy, privacy_options %>
-    </div>
-    <!-- <button type="button" name="button"><i class='material-icons'>attachment</i>קבצים</button> -->
-    <!-- <button type="button" name="button"><i class='material-icons'>lock</i>פרטיות</button> -->
-    <div class="field">
-      <%= form.label :privacy, "קבצים" %>
-      <%= form.file_field :attachments, multiple: true %>
-      <p style="font-size: 0.8rem">ניתן להעלות קבצי PDF,  אופיס, תמונות, סרטונים והקלטות קוליות</p>
-    </div>
-  </div>
-</div>
 <% end %>
 
 <script>
@@ -78,6 +83,7 @@
   var content
   var time_idle = 0
   $(document).ready(function() {
+    console.log($("#document_privacy").val());
     $('.select2_tags').select2({
       tags: true,
       tokenSeparators: [','],
@@ -97,6 +103,8 @@
     changes++
     time_idle = 0
     if (changes >= 10) {
+      console.log($("form").serialize());
+
       changes = 0
       if (id != null) {
         $.ajax({
@@ -154,7 +162,7 @@
       })
     }else {
       time_idle = time_idle + 5000
-      console.log("time_idle: " + time_idle);
+      // console.log("time_idle: " + time_idle);
     }
     if (time_idle >= 60000) {
       // $("form").submit()
@@ -169,4 +177,19 @@
       $(".saved").removeClass('show')
     }, 1000);
   }
+
+  $("input[type=file]").on('change', e => {
+    $(".files").html('')
+    for (var i = 0; i < e.target.files.length; i++) {
+      $(".files").append("<li>" + e.target.files[i].name + "</li>")
+    }
+    $(".open-upload-files").addClass('uploaded')
+  });
+  $(".open-upload-files").click(function(event) {
+    $(".form-files").addClass('show')
+  });
+  $(".close-upload-files").click(function(event) {
+    console.log("open");
+    $(".form-files").removeClass('show')
+  });
 </script>
