@@ -16,4 +16,7 @@ Rails.application.routes.draw do
   get 'intro', to: 'home#intro'
   get 'intro2', to: 'home#intro2'
   get 'intro3', to: 'home#intro3'
+  delete 'delete_attachment', to: 'home#delete_attachment'
+
+
 end

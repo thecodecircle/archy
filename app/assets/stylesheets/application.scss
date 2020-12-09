@@ -314,7 +314,7 @@ form.doc-meet{
 .actions{
   display: flex;
   flex-wrap: wrap;
-  button, input[type=submit]{
+  button:not(.delete-file), input[type=submit], {
     padding: 10px;
     background: #3182ce;
     display: flex;
@@ -323,8 +323,8 @@ form.doc-meet{
     margin-left: 1rem;
     border-radius: 100px;
   }
-  button:hover, input[type=submit]:hover,
-  button:focus, input[type=submit]:focus{
+  button:not(.delete-file):hover, input[type=submit]:hover,
+  button:not(.delete-file):focus, input[type=submit]:focus{
     background: #065daf;
   }
 }

@@ -32,7 +32,11 @@
       <ul class="files">
       <% if  @document.attachments.present? %>
         <% @document.attachments.each do |attachment| %>
-          <li><%= attachment.filename %></li>
+          <li><%= attachment.filename %>
+            <%= link_to delete_attachment_path(a_id: attachment.id), method: :delete, data: { confirm: 'בטוח\ה?' }, remote: true, class: "delete-file"  do %>
+              <i class='material-icons text-red-600'>close</i>
+             <% end %>
+          </li>
         <% end %>
       <% end %></ul>
       <p style="font-size: 0.8rem">ניתן להעלות מספר קבצי PDF,  אופיס, תמונות, סרטונים והקלטות קוליות</p>
@@ -181,7 +185,8 @@
   $("input[type=file]").on('change', e => {
     $(".files").html('')
     for (var i = 0; i < e.target.files.length; i++) {
-      $(".files").append("<li>" + e.target.files[i].name + "</li>")
+      console.log(e.target.files);
+      $(".files").append("<li>" + e.target.files[i].name + "<button type='button' name='button' class='delete-file uploaded-now' data-file='" + i + "' ><i class='material-icons text-red-600'>close</i></button></li>")
     }
     $(".open-upload-files").addClass('uploaded')
   });
@@ -191,5 +196,9 @@
   $(".close-upload-files").click(function(event) {
     console.log("open");
     $(".form-files").removeClass('show')
+  });
+
+  $(".delete-file").click(function(event) {
+    $(event.target).parent().remove()
   });
 </script>

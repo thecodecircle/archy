@@ -67,6 +67,16 @@ class HomeController < ApplicationController
     @documents = @user.documents
     @meetings = @user.meetings
   end
+  def delete_attachment
+    # @attachment = ActiveStorage::Blob.find_signed(params[:a_id])
+    @attachment =  ActiveStorage::Attachment.find(params[:a_id])
+    puts "**************** ataachtmetn: #{@attachment.filename} ************************"
+    @attachment.purge
+    respond_to do |format|
+      format.js
+    end
+
+  end
 
   def intro
     cookies[:intro] = "true"
