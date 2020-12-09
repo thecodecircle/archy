@@ -29,7 +29,7 @@
   <body class=" atext-white tracking-wider leading-normal">
 
     <%= render "layouts/navbar" unless current_page?(intro_path) ||  current_page?(intro2_path) ||  current_page?(intro3_path) %>
-    <main class="lg:px-10 px-4 mt-20">
+    <main class="lg:px-10 px-4 mt-5">
       <%= content_for?(:content) ? yield(:content) : yield %>
     </main>
     <%= render "layouts/footer" unless current_page?(intro_path) ||  current_page?(intro2_path) ||  current_page?(intro3_path) %>

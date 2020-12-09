@@ -10,9 +10,15 @@ $desktop-width: 1024px;
 }
 html{
   scroll-behavior: smooth;
+  min-height: 100vh;
 }
 body{
-  background: #DAEAFF
+  background: #DAEAFF;
+  min-height: 100vh;
+}
+main{
+  background: #DAEAFF;
+  margin-bottom: 100px;
 }
 @mixin desktop {
   @media (min-width: #{$desktop-width}) {
@@ -158,6 +164,10 @@ footer{
   width: 100%;
   margin-top: 2rem;
   text-align: center;
+  position: fixed;
+  bottom: 0;
+  z-index: -1;
+
   img{
     height: 1rem;
     margin: 0 1ch;
