@@ -222,7 +222,8 @@ table.dataTable.dtr-inline.collapsed>tbody>tr>td:first-child:before, table.dataT
   background-color: #667eea !important; /*bg-indigo-500*/
 }
 
-trix-editor#document_content{
+trix-editor#document_content,
+trix-editor#meeting_content{
   min-height: 50vh;
 
 }
