@@ -1,12 +1,15 @@
 <% content_for :title, "חיפוש | ארכיון השומר הצעיר" %>
 <h1>חיפוש חומרים</h1>
 
-      <%= link_to  "פגישות", search_path(meetings: true), class: "w-full hover:bg-blue-600 text-blue-600 hover:text-white font-bold py-2 px-4 border-2 border-blue-600 hover:border-transparent rounded-full font-bold shadow" %>
-      <%= link_to  "מסמכים", search_path(documents: true), class: "w-full hover:bg-blue-600 text-blue-600 hover:text-white font-bold py-2 px-4 border-2 border-blue-600 hover:border-transparent rounded-full font-bold shadow" %>
 <!--Container-->
 <div class="container w-full md:w-4/5  mx-auto px-2 mt-20 text-gray-900">
     <!--Card-->
     <div id='recipients' class="p-8 mt-6 lg:mt-0 rounded shadow bg-white">
+      <div class="flex mb-4 w-full justify-end">
+        <%= link_to  "פגישות", search_path(meetings: true), class: "text-center hover:bg-blue-600 text-blue-600 hover:text-white font-bold py-2 px-4 border-2 border-blue-600 hover:border-transparent rounded-full font-bold shadow ml-2" %>
+        <%= link_to  "מסמכים", search_path(documents: true), class: "text-center hover:bg-blue-600 text-blue-600 hover:text-white font-bold py-2 px-4 border-2 border-blue-600 hover:border-transparent rounded-full font-bold shadow" %>
+      </div>
+      <br>
       <table class="hover stripe row-border order-column" id="search-table" data-sort="true" data-source="<%= search_path(format: :json, documents: params[:documents], meetings: params[:meetings]) %>">
         <thead>
           <tr>
