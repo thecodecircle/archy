@@ -46,6 +46,7 @@ group :development do
   gem 'capistrano-bundler', require: false
   gem 'capistrano3-puma',   require: false
   gem 'solargraph'
+  gem 'rails_real_favicon'
 end
 
 group :test do

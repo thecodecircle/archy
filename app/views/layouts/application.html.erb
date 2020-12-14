@@ -4,6 +4,8 @@
     <title><%= content_for?(:title) ? yield(:title) : "ארכיון השומר הצעיר" %></title>
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
+    <%= render 'application/favicon' %>
+    <meta property="og:title" content="ארכיון תנועת הבוגרים" />
     <meta property="og:description" content="פרויקט לתיעוד תנועת השומר הצעיר" />
     <meta property="og:type" content="website" />
     <!-- <meta property="og:image" content="<%# image_url('fenix.png') %>" /> -->
@@ -26,7 +28,7 @@
     </script>
   </head>
 
-  <body class=" atext-white tracking-wider leading-normal">
+  <body class="tracking-wider leading-normal">
 
     <%= render "layouts/navbar" unless current_page?(intro_path) ||  current_page?(intro2_path) ||  current_page?(intro3_path) %>
     <main class="lg:px-10 px-4 mt-5">
