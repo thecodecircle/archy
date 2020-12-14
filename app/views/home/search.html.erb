@@ -10,7 +10,7 @@
         <%= link_to  "מסמכים", search_path(documents: true), class: "text-center hover:bg-blue-600 text-blue-600 hover:text-white font-bold py-2 px-4 border-2 border-blue-600 hover:border-transparent rounded-full font-bold shadow" %>
       </div>
       <br>
-      <table class="hover stripe row-border order-column" id="search-table" data-sort="true" data-source="<%= search_path(format: :json, documents: params[:documents], meetings: params[:meetings]) %>">
+      <table class="hover stripe row-border order-column" id="search-table" data-sort="true" data-source="<%= search_path(format: :json, documents: params[:documents], meetings: params[:meetings], tag: params[:tag]) %>">
         <thead>
           <tr>
             <th data-priority="1" data-data="title">כותרת</th>

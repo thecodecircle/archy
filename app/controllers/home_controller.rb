@@ -12,7 +12,12 @@ class HomeController < ApplicationController
           @documents = Document.all
         elsif params[:meetings]
           @meetings = Meeting.all
+        elsif params[:tag]
+          puts "*******************tag**********************************"
+          @documents = Document.tagged_with(params[:tag])
+          @meetings = Meeting.tagged_with(params[:tag])
         else
+          puts "********************else*********************************"
           @documents = Document.all
           @meetings = Meeting.all
         end
@@ -25,6 +30,11 @@ class HomeController < ApplicationController
         elsif params[:meetings]
           @meetings = Meeting.commons
           @meetings = @meetings + Meeting.team.where(team_id: current_user.teams.ids)
+        elsif params[:tag]
+          @documents = Document.approved.commons.tagged_with(params[:tag])
+          @documents = @documents + Document.approved.internal.tagged_with(params[:tag]) if current_user.status == "internal"
+          @documents = @documents + Document.approved.personal.where(user_id: current_user.id).tagged_with(params[:tag])
+          @meetings = Meeting.commons.tagged_with(params[:tag])
         else
           @documents = Document.approved.commons
           @documents = @documents + Document.approved.internal if current_user.status == "internal"
@@ -38,6 +48,9 @@ class HomeController < ApplicationController
         @documents = Document.approved.commons
       elsif params[:meetings]
         @meetings = Meeting.commons
+        elsif params[:tag]
+          @documents = Document.approved.commons.tagged_with(params[:tag])
+          @meetings = Meeting.commons.tagged_with(params[:tag])
       else
         @documents = Document.approved.commons
         @meetings = Meeting.commons

@@ -5,7 +5,12 @@ json.set! :data do
     json.content document.content.to_plain_text
     json.user User.find(document.user_id).name
     json.date document.date.strftime("%Y") if document.date
-    json.tags "#{document.tag_list}"
+    tags = ""
+    document.tag_list.each do |t|
+      tags += link_to t, search_path(tag: t)
+      tags += ", " unless t == document.tag_list.last
+    end
+    json.tags "#{tags}"
     json.privacy he_privacy[document.privacy.to_sym] if document.privacy.present?
     json.status link_to he_status[document.status.to_sym], toggle_status_path(clicked_document: document.id)
     json.url "#{link_to "<i class='material-icons'>edit</i>".html_safe, edit_document_path(document)} #{link_to "<i class='material-icons'>delete</i>".html_safe, document, method: :delete, data: { confirm: 'בטוח/ה?' }}"
