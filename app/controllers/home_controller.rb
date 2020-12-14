@@ -8,22 +8,40 @@ class HomeController < ApplicationController
   def search
     if user_signed_in?
       if current_user.admin?
-        if params[:approving]
-          @documents = Document.not_approved
+        if params[:documents]
+          @documents = Document.all
+        elsif params[:meetings]
+          @meetings = Meeting.all
         else
-          @documents = Document.approved
+          @documents = Document.all
           @meetings = Meeting.all
         end
       else
-        @documents = Document.approved.commons
-        @documents = @documents + Document.approved.internal if current_user.status == "internal"
-        @documents = @documents + Document.approved.personal.where(user_id: current_user.id)
-        @meetings = Meeting.commons
-        @meetings = @meetings + Meeting.team.where(team_id: current_user.teams.ids)
+        if params[:documents]
+          @documents = Document.approved.commons
+          @documents = @documents + Document.approved.internal if current_user.status == "internal"
+          @documents = @documents + Document.approved.personal.where(user_id: current_user.id)
+          @meetings = Meeting.commons
+        elsif params[:meetings]
+          @meetings = Meeting.commons
+          @meetings = @meetings + Meeting.team.where(team_id: current_user.teams.ids)
+        else
+          @documents = Document.approved.commons
+          @documents = @documents + Document.approved.internal if current_user.status == "internal"
+          @documents = @documents + Document.approved.personal.where(user_id: current_user.id)
+          @meetings = Meeting.commons
+          @meetings = @meetings + Meeting.team.where(team_id: current_user.teams.ids)
+        end
       end
     else
-      @documents = Document.approved.commons
-      @meetings = Meeting.commons
+      if params[:documents]
+        @documents = Document.approved.commons
+      elsif params[:meetings]
+        @meetings = Meeting.commons
+      else
+        @documents = Document.approved.commons
+        @meetings = Meeting.commons
+      end
     end
   end
 
@@ -41,7 +59,7 @@ class HomeController < ApplicationController
       document = Document.find(params[:clicked_document])
       document.status = 1 - document.read_attribute_before_type_cast(:status)
       document.save
-      redirect_to search_path(approving: true)
+      redirect_to search_path
     end
   end
 

@@ -10,17 +10,15 @@ json.set! :data do
     json.status link_to he_status[document.status.to_sym], toggle_status_path(clicked_document: document.id)
     json.url "#{link_to "<i class='material-icons'>edit</i>".html_safe, edit_document_path(document)} #{link_to "<i class='material-icons'>delete</i>".html_safe, document, method: :delete, data: { confirm: 'בטוח/ה?' }}"
   end
-  unless params[:approving]
-    json.array! @meetings do |meeting|
-        json.title link_to meeting.subject, team_meeting_path(meeting, meeting.team)
-        json.description "לפגישות אין תיאור"
-        json.content meeting.content.to_plain_text
-        json.user meeting.team.name
-        json.date meeting.created_at.strftime("%Y")
-        json.tags "#{meeting.tag_list}"
-        json.privacy he_privacy[meeting.privacy.to_sym]
-        json.status "לפגישות אין סטטוס"
-        json.url "#{link_to "<i class='material-icons'>edit</i>".html_safe, edit_team_meeting_path(meeting.team, meeting)} #{link_to "<i class='material-icons'>delete</i>".html_safe, team_meeting_path(meeting.team, meeting), method: :delete, data: { confirm: 'בטוח/ה?' }}"
-    end
+  json.array! @meetings do |meeting|
+      json.title link_to meeting.subject, team_meeting_path(meeting, meeting.team)
+      json.description "לפגישות אין תיאור"
+      json.content meeting.content.to_plain_text
+      json.user meeting.team.name
+      json.date meeting.created_at.strftime("%Y")
+      json.tags "#{meeting.tag_list}"
+      json.privacy he_privacy[meeting.privacy.to_sym]
+      json.status "לפגישות אין סטטוס"
+      json.url "#{link_to "<i class='material-icons'>edit</i>".html_safe, edit_team_meeting_path(meeting.team, meeting)} #{link_to "<i class='material-icons'>delete</i>".html_safe, team_meeting_path(meeting.team, meeting), method: :delete, data: { confirm: 'בטוח/ה?' }}"
   end
 end
