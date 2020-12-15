@@ -1,73 +1,69 @@
 <% content_for :title, "#{@document.title} | ארכיון השומר הצעיר" %>
-<p id="notice" class="mb-4"><%= notice %></p>
 
-<div class="mb-4">
-  <p>
-    <strong>נוצר ע"י:</strong>
-    <%= User.find(@document.user_id).name %>
-  </p>
+<div class="mb-4 doc-meet-show">
+  <div class="">
+    <div class="head">
+      <div class="">
 
-  <p>
-    <strong>כותרת:</strong>
-    <%= @document.title %>
-  </p>
+        <h1>
+          <%= @document.title %>
+          <%= link_to "<i class='material-icons'>edit</i>".html_safe, edit_document_path(@document), class: "font-bold" if @document.user.id == current_user.id || current_user.admin? %>
+        </h1>
+        <h3>
+          <%= User.find(@document.user_id).name %>
+        </h3>
+        <h3><%= @document.date.strftime("%d/%m/%Y") %></h3>
+      </div>
+      <div class="tags-privacy">
+        <div class="">
+          <% @document.tag_list.each do |tag| %>
+            <%= link_to tag,  search_path(tag: tag) %> |
+          <% end %>
+        </div>
+        <div class="">
+          <%= he_privacy[@document.privacy.to_sym] %>
+        </div>
+        <% if @document.user.id == current_user.id || current_user.admin? %>
+          <%= link_to "<i class='material-icons'>delete</i>".html_safe, document_path(@document), method: :delete, data: { confirm: 'בטוח\ה?' }, class: "text-red-600 font-bold" if @document.user.id == current_user.id || current_user.admin? %>
+        <% end %>
+      </div>
+    </div>
 
-  <p>
-    <strong>תיאור:</strong>
-    <%= @document.description %>
-  </p>
+<hr class="mt-4 border-black">
+    <div class="description mt-4">
+      <%= @document.description %>
+    </div>
+<hr class="mt-4 border-black">
+    <div  class="content mt-4">
+      <%= @document.content %>
+    </div>
 
-  <p>
-    <strong>תוכן:</strong>
-    <%= @document.content %>
-  </p>
 
-  <p>
-    <strong>תאריך יצירת המסמך:</strong>
-    <%= @document.date.strftime("%d/%m/%Y") %>
-  </p>
 
-  <p>
-    <strong>תגיות:</strong>
-    <%= @document.tag_list %>
-  </p>
-
-  <p>
-    <strong>הגדרת פרטיות:</strong>
-    <%= he_privacy[@document.privacy.to_sym] %>
-  </p>
-</div>
-
-<p>
-  <strong>קבצים מצורפים:</strong>
-  <% if @document.attachments.empty? %>
-    אין 
-  <% else %>
-    <ul>
-      <% @document.attachments.each do |attachment| %>
+      <% if @document.attachments.present? %>
+      <ul>
+        <% @document.attachments.each do |attachment| %>
         <% if attachment.image? %>
-          <li class="mt-4"><%= link_to url_for(attachment), target: "_blank" do %>
-            <%= image_tag attachment.variant(resize_to_limit: [250, 250]), alt: attachment.filename, class: "h-64" %>
+        <li class="mt-4"><%= link_to url_for(attachment), target: "_blank" do %>
+          <%= image_tag attachment.variant(resize_to_limit: [250, 250]), alt: attachment.filename, class: "h-64" %>
           <% end %></li>
-        <% elsif attachment.video? %>
+          <% elsif attachment.video? %>
           <li class="mt-4"><%= video_tag url_for(attachment), controls: true, class: "h-64" %></li>
-        <% elsif attachment.audio? %>
+          <% elsif attachment.audio? %>
           <li class="mt-4"><%= audio_tag url_for(attachment), controls: true %></li>
-        <% elsif attachment.text? %>
+          <% elsif attachment.text? %>
           <li class="mt-4"><p><%= attachment %></p></li>
-        <% else %>
+          <% else %>
           <%= link_to attachment.filename, url_for(attachment) %>
           <%# link_to url_for(attachment) do %>
-            <!-- <li class="mt-4"><%# image_tag attachment.preview(resize_to_limit: [1000, 1000]) %></li> -->
+          <!-- <li class="mt-4"><%# image_tag attachment.preview(resize_to_limit: [1000, 1000]) %></li> -->
           <%# end %>
+          <% end %>
+          <% end %>
+        </ul>
         <% end %>
-      <% end %>
-    </ul>
-<% end %>
-</p>
+  </div>
+
+</div>
 
 <br>
-<% if @document.user.id == current_user.id || current_user.admin? %>
-  <%= link_to 'עריכת המסמך', edit_document_path(@document), class: "bg-white hover:bg-gray-400 text-blue-600 font-bold py-2 px-4 rounded-full" %>
-  <%= link_to 'מחיקת המסמך', document_path(@document), method: :delete, data: { confirm: 'בטוח\ה?' }, class: "bg-white hover:bg-gray-400 text-blue-600 font-bold py-2 px-4 rounded-full" %>
-<% end %>

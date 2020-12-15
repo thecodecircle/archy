@@ -27,7 +27,21 @@
             <% end %>
           </tr>
         </thead>
-      </table> 
+        <tbody>
+          <% @documents.first(10).each do |doc| %>
+            <tr>
+              <td><%= doc.title %></td>
+              <td><%= doc.description %></td>
+              <td><%= doc.content %></td>
+              <td><%= doc.user.name %></td>
+              <td><%= doc.date %></td>
+              <td><%= doc.tags.first %></td>
+              <td><%= doc.privacy %></td>
+              <td><%= link_to he_status[doc.status.to_sym], toggle_status_path(clicked_document: doc.id) %></td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
     </div>
     <!--/Card-->
 </div>
@@ -39,6 +53,32 @@
 
 <script>
     $(document).ready(function() {
+//       var columns = [
+//       { "data": "title" },
+//       { "data": "description" },
+//       { "data": "content" },
+//       { "data": "user" },
+//       { "data": "date" },
+//       { "data": "tags" },
+//       { "data": "privacy" },
+//       { "data": "status" }
+// ];
+//
+//       var data = [];
+// $('#search-table tbody tr').each(
+//     function()
+//     {
+//         var item = {};
+//         $(this).find('td').each(
+//             function(i)
+//             {
+//                 item[columns[i].data] = $(this).html();
+//             }
+//         );
+//         data.push(item);
+//     }
+// );
+// console.log(data);
         $('#search-table').DataTable({
             "columnDefs": [{
                 "targets": [2],
@@ -48,8 +88,7 @@
             language: {
                 "url": "//cdn.datatables.net/plug-ins/1.10.21/i18n/Hebrew.json"
             },
-            "ajax":
-                {"url": $('#search-table').data('source')}
+            "ajax": {"url": $('#search-table').data('source')}
         });
     });
 </script>

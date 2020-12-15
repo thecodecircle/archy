@@ -183,10 +183,12 @@
   }
 
   $("input[type=file]").on('change', e => {
-    $(".files").html('')
+    if (<%= @document.attachments.blank? %>) {
+      $(".files").html('')
+    }
+    console.log(e.target.files);
     for (var i = 0; i < e.target.files.length; i++) {
-      console.log(e.target.files);
-      $(".files").append("<li>" + e.target.files[i].name + "<button type='button' name='button' class='delete-file uploaded-now' data-file='" + i + "' ><i class='material-icons text-red-600'>close</i></button></li>")
+      $(".files").append("<li>" + e.target.files[i].name + "</li>")
     }
     $(".open-upload-files").addClass('uploaded')
   });
@@ -194,11 +196,11 @@
     $(".form-files").addClass('show')
   });
   $(".close-upload-files").click(function(event) {
-    console.log("open");
     $(".form-files").removeClass('show')
   });
 
   $(".delete-file").click(function(event) {
-    $(event.target).parent().remove()
+    console.log("delete file");
+    $(event.target).parents("li").remove()
   });
 </script>

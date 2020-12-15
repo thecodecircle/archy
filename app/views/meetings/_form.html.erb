@@ -32,7 +32,11 @@
     <ul class="files">
     <% if  @meeting.attachments.present? %>
       <% @meeting.attachments.each do |attachment| %>
-        <li><%= attachment.filename %></li>
+        <li><%= attachment.filename %>
+          <%= link_to delete_attachment_path(a_id: attachment.id), method: :delete, data: { confirm: 'בטוח\ה?' }, remote: true, class: "delete-file"  do %>
+            <i class='material-icons text-red-600'>close</i>
+           <% end %>
+        </li>
       <% end %>
     <% end %></ul>
     <p style="font-size: 0.8rem">ניתן להעלות מספר קבצי PDF,  אופיס, תמונות, סרטונים והקלטות קוליות</p>
@@ -201,4 +205,25 @@
             $(".saved").removeClass('show')
         }, 1000);
     }
+    $("input[type=file]").on('change', e => {
+      if (<%= @meeting.attachments.blank? %>) {
+        $(".files").html('')
+      }
+      console.log(e.target.files);
+      for (var i = 0; i < e.target.files.length; i++) {
+        $(".files").append("<li>" + e.target.files[i].name + "</li>")
+      }
+      $(".open-upload-files").addClass('uploaded')
+    });
+    $(".open-upload-files").click(function(event) {
+      $(".form-files").addClass('show')
+    });
+    $(".close-upload-files").click(function(event) {
+      $(".form-files").removeClass('show')
+    });
+
+    $(".delete-file").click(function(event) {
+      console.log("delete file");
+      $(event.target).parents("li").remove()
+    });
 </script>

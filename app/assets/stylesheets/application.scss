@@ -283,17 +283,18 @@ form.doc-meet{
   display: grid;
   grid-template-columns:  repeat(auto-fit, minmax(200px, 1fr));
   grid-gap: 20px;
-  input{
+  input,
+  {
     height: 50px;
     padding: 16px;
     width: 100%;
   }
-
 }
 .select2-container--default .select2-selection--multiple{
   border: none;
   height: 50px;
   padding:  0 16px;
+  color: white;
 }
 .select2-container .select2-search--inline .select2-search__field {
   margin: 0;
@@ -467,3 +468,36 @@ input:checked + .slider:before {
   grid-gap: 5px;
   align-items: center;
 }
+
+
+.doc-meet-show{
+  display: grid;
+  > div{
+    background: white;
+    padding: 2rem;
+    width: 75vw;
+    justify-self: center;
+  }
+  h1{
+    text-align: right;
+    font-size: 3rem !important;
+  }
+  h3{
+    font-size: 0.8rem !important;
+  }
+  .head{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+  }
+  .tags-privacy{
+    justify-self: end;
+    width: 33%;
+    *{
+      font-size: 0.8rem !important;
+    }
+    i{
+      font-size: 1rem !important;
+    }
+  }
+}
+.trix-button-group--file-tools { display: none !important; }
