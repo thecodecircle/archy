@@ -472,6 +472,7 @@ input:checked + .slider:before {
 
 .doc-meet-show{
   display: grid;
+  min-height: 80vh;
   > div{
     background: white;
     padding: 2rem;
@@ -486,7 +487,7 @@ input:checked + .slider:before {
     font-size: 0.8rem !important;
   }
   .head{
-    display: grid;
+    // display: grid;
     grid-template-columns: 1fr 1fr;
   }
   .tags-privacy{
@@ -501,3 +502,33 @@ input:checked + .slider:before {
   }
 }
 .trix-button-group--file-tools { display: none !important; }
+
+.material-icons{
+  position: relative;
+}
+.material-icons.edit:before,
+.material-icons.delete:before,
+.material-icons.mail:before{
+  font-family: 'Rubik', sans-serif;
+  font-size: 1.1rem;
+  font-weight: 700;
+  position: absolute;
+  left: -4ch;
+}
+.material-icons.edit:before{
+  @include desktop {
+    content: "עריכה";
+  }
+}
+
+.material-icons.delete:before{
+  @include desktop {
+    content: "מחיקה";
+  }
+}
+.material-icons.mail:before{
+  left: -3ch;
+  @include desktop {
+    content: "מייל";
+  }
+}

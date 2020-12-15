@@ -2,12 +2,19 @@
 
 <div class="mb-4 doc-meet-show">
   <div class="">
-    <div class="head">
+    <% if @document.user.id == current_user.id || current_user.admin? %>
+    <div class="actions">
+      <% if @document.user.id == current_user.id || current_user.admin?  %>
+        <%= link_to "<i class='material-icons edit'>edit</i>".html_safe, edit_document_path(@document), class: "font-bold ml-20 my-5 flex items-center" %>
+        <%= link_to "<i class='material-icons delete'>delete</i>".html_safe, document_path(@document), method: :delete, data: { confirm: 'בטוח\ה?' }, class: "text-red-600 font-bold m-5 flex items-center"  %>
+      <% end %>
+    </div>
+    <% end %>
+    <div class="head block lg:grid">
       <div class="">
 
         <h1>
           <%= @document.title %>
-          <%= link_to "<i class='material-icons'>edit</i>".html_safe, edit_document_path(@document), class: "font-bold" if @document.user.id == current_user.id || current_user.admin? %>
         </h1>
         <h3>
           <%= User.find(@document.user_id).name %>
@@ -16,16 +23,13 @@
       </div>
       <div class="tags-privacy">
         <div class="">
+          <%= he_privacy[@document.privacy.to_sym] %>
+        </div>
+        <div class="">
           <% @document.tag_list.each do |tag| %>
             <%= link_to tag,  search_path(tag: tag) %> |
           <% end %>
         </div>
-        <div class="">
-          <%= he_privacy[@document.privacy.to_sym] %>
-        </div>
-        <% if @document.user.id == current_user.id || current_user.admin? %>
-          <%= link_to "<i class='material-icons'>delete</i>".html_safe, document_path(@document), method: :delete, data: { confirm: 'בטוח\ה?' }, class: "text-red-600 font-bold" if @document.user.id == current_user.id || current_user.admin? %>
-        <% end %>
       </div>
     </div>
 

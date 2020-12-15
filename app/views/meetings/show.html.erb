@@ -1,82 +1,84 @@
 <% content_for :title, "#{@meeting.subject} | ארכיון השומר הצעיר" %>
-<div class="mb-2">
-    <% if @meeting.team.users.ids.include?(current_user.id) || current_user.admin? %>
-    <%= link_to "<i class='material-icons'>edit</i>".html_safe, edit_team_meeting_path(@meeting.team, @meeting), class: "bg-white hover:bg-gray-400 text-blue-600 font-bold py-2 px-4 rounded-full" %>
-    <%= link_to "<i class='material-icons'>delete</i>".html_safe, team_meeting_path(@meeting.team, @meeting), method: :delete, data: { confirm: 'בטוח\ה?' }, class: "bg-white hover:bg-gray-400 text-blue-600 font-bold py-2 px-4 rounded-full" %>
-    <%= link_to "<i class='material-icons'>mail</i>".html_safe, send_meeting_path(meeting: @meeting.id, user: current_user.id), class: "bg-white hover:bg-gray-400 text-blue-600 font-bold py-2 px-4 rounded-full" %>
+
+<div class="doc-meet-show">
+  <div class="">
+    <% if params[:sent] %>
+    <strong>מייל נשלח בהצלחה</strong>
     <% end %>
-</div>
-<% if params[:sent] %>
-<strong>מייל נשלח בהצלחה</strong>
-<% end %>
-<p id="notice"><%= notice %></p>
+    <p id="notice"><%= notice %></p>
+      <% if @meeting.team.users.ids.include?(current_user.id) || current_user.admin? %>
+        <div class="actions">
+          <%= link_to "<i class='material-icons edit'>edit</i>".html_safe, edit_team_meeting_path(@meeting.team, @meeting), class: "lg:ml-10 ml-2 my-5 font-bold flex items-center" %>
+          <%= link_to "<i class='material-icons mail'>mail</i>".html_safe, send_meeting_path(meeting: @meeting.id, user: current_user.id), class: "lg:m-10 m-2 font-bold flex items-center" %>
+          <%= link_to "<i class='material-icons delete'>delete</i>".html_safe, team_meeting_path(@meeting.team, @meeting), method: :delete, data: { confirm: 'בטוח\ה?' }, class: "lg:m-10 m-2 text-red-600 font-bold flex items-center " %>
+        </div>
+      <% end %>
+    <div class="head block lg:grid">
+      <div class="">
+        <h1>
+            <%= @meeting.subject %>
+        </h1>
 
-<p>
-    <strong>נושא הפגישה:</strong>
-    <%= @meeting.subject %>
-</p>
+        <h3>
+            <%= Team.find(@meeting.team_id).name %>
+        </h3>
+      </div>
+      <div class="tags-privacy">
+        <div>
+          <% @meeting.tag_list.each do |tag| %>
+            <%= link_to tag,  search_path(tag: tag) %> |
+          <% end %>
+        </div>
+        <div>
+          <%= he_privacy[@meeting.privacy.to_sym] %>
+        </div>
 
-<p>
-    <strong>צוות:</strong>
-    <%= Team.find(@meeting.team_id).name %>
-</p>
+      </div>
+    </div>
 
-<p>
-    <strong>תוכן הפגישה:</strong>
-    <%= @meeting.content %>
-</p>
+    <ul>
+      <% @meeting.users.each do |user| %>
+      <li><%= user.name %></li>
+      <% end %>
+    </ul>
+    <hr class="mt-4 border-black">
 
-<p>
-    <strong>תגיות:</strong>
-    <%= @meeting.tag_list %>
-</p>
+    <div class="content mt-4">
+        <%= @meeting.content %>
+    </div>
 
-<p>
-    <strong>פרטיות:</strong>
-    <%= he_privacy[@meeting.privacy.to_sym] %>
-</p>
 
-<p>
-    <strong>כמות קבצים מצורפים:</strong>
-    <%= @meeting.attachments.count %>
-</p>
 
-<p>
-    <strong>חברי צוות שנכחו בפגישה:</strong>
-<ul>
-    <% @meeting.users.each do |user| %>
-    <li><%= user.name %></li>
-    <% end %>
-</ul>
-</p>
 
-<p>
-    <strong>קבצים מצורפים:</strong>
-<ul>
-    <% @meeting.attachments.each do |attachment| %>
-    <% if attachment.image? %>
-    <li class="mt-4">
-        <%= link_to url_for(attachment), target: "_blank" do %>
-            <% image_tag attachment.variant(resize_to_limit: [250, 250]) %>
+
+    <div>
+    <ul>
+        <% @meeting.attachments.each do |attachment| %>
+          <% if attachment.image? %>
+          <li class="mt-4">
+              <%= link_to url_for(attachment), target: "_blank" do %>
+                  <% image_tag attachment.variant(resize_to_limit: [250, 250]) %>
+              <% end %>
+          </li>
+          <% elsif attachment.video? %>
+            <li class="mt-4"><%= video_tag url_for(attachment), controls: true %></li>
+          <% elsif attachment.audio? %>
+            <li class="mt-4"><%= audio_tag attachment %></li>
+          <% elsif attachment.text? %>
+            <li class="mt-4">
+                <div><%= attachment %></div>
+            </li>
+          <% else %>
+            <%= link_to url_for(attachment) do %>
+              <% if attachment.previewable? %>
+                <li class="mt-4"><%= image_tag attachment.preview(resize_to_limit: [1000, 1000]) %></li>
+              <% else %>
+                <%= attachment.filename %> <br>
+              <% end %>
+            <% end %>
+          <% end %>
         <% end %>
-    </li>
-    <% elsif attachment.video? %>
-    <li class="mt-4"><%= video_tag url_for(attachment), controls: true %></li>
-    <% elsif attachment.audio? %>
-    <li class="mt-4"><%= audio_tag attachment %></li>
-    <% elsif attachment.text? %>
-    <li class="mt-4">
-        <p><%= attachment %></p>
-    </li>
-    <% else %>
-    <%= link_to url_for(attachment) do %>
-    <% if attachment.previewable? %>
-    <li class="mt-4"><%= image_tag attachment.preview(resize_to_limit: [1000, 1000]) %></li>
-    <% else %>
-    <%= attachment.filename %> <br>
-    <% end %>
-    <% end %>
-    <% end %>
-    <% end %>
-</ul>
-</p>
+    </ul>
+  </div>
+  </div>
+</div>
