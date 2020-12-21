@@ -50,7 +50,7 @@ class MeetingsController < ApplicationController
     respond_to do |format|
       if @meeting.update(meeting_params)
         format.js {render json: @meeting.id}
-        format.html { redirect_to team_meeting_path(@team, @meeting), notice: 'הפגישה נמחקה בהצלחה.' }
+        format.html { redirect_to team_meeting_path(@team, @meeting), notice: 'הפגישה עודכנה בהצלחה.' }
         format.json { render :show, status: :ok, location: @meeting }
       else
         format.html { render :edit }
